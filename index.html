@@ -171,9 +171,19 @@
     border-radius:12px;
     line-height:1;
     white-space:nowrap;
+display:inline-block;
+text-decoration:none;
   }
   .hpc-size-badge.custom{
     background:var(--custom);
+}
+.hpc-size-badge[href]{
+cursor:pointer;
+transition:transform .12s ease, box-shadow .12s ease;
+}
+.hpc-size-badge[href]:hover{
+transform:translateY(-2px);
+box-shadow:0 6px 16px rgba(26,36,33,0.3);
   }
   .hpc-fit-line{
     flex:1;
@@ -250,7 +260,30 @@
     color:var(--dark);
     font-weight:600;
   }
-  .hpc-footer-note{
+  .hpc-order-btn{
+display:inline-flex;
+align-items:center;
+gap:8px;
+background:var(--teal);
+color:var(--white);
+font-family:'Wix Madefor Text', sans-serif;
+font-weight:700;
+font-size:15px;
+padding:13px 28px;
+border-radius:999px;
+text-decoration:none;
+transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.hpc-order-btn:hover{
+background:var(--teal-dark);
+transform:translateY(-1px);
+box-shadow:0 6px 14px rgba(45,192,192,0.3);
+}
+.hpc-order-btn::after{
+content:'→';
+font-size:16px;
+}
+.hpc-footer-note{
     text-align:center;
     font-size:12px;
     color:var(--mid);
@@ -289,7 +322,7 @@
 
     <div class="hpc-result" id="hpc-result">
       <div class="hpc-result-top">
-        <div class="hpc-size-badge" id="hpc-badge">Medium</div>
+        <a class="hpc-size-badge" id="hpc-badge" target="_top">Medium</a>
         <div class="hpc-fit-line">
           <div class="hpc-eyebrow">Recommended cover</div>
           <span class="hpc-fit-pill good" id="hpc-fit-pill">Good Fit</span>
@@ -308,7 +341,7 @@
       </div>
 
       <div class="hpc-cta-hint" id="hpc-cta-hint">
-        Order your <span id="hpc-cta-size">Medium</span> Classic Heat Pump Cover using the buttons below.
+        <a class="hpc-order-btn" id="hpc-order-link" href="#" target="_top">Order My <span id="hpc-cta-size">Medium</span> Cover</a>
       </div>
     </div>
 
@@ -320,6 +353,12 @@
 
 <script>
 const HPC_DATA = [{"brand": "Mitsubishi", "series": "GS", "model": "GS25", "outdoor": "MUZ-GS25", "kw": 2.5, "w": 800, "h": 550, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "GS", "model": "GS35", "outdoor": "MUZ-GS35", "kw": 3.5, "w": 800, "h": 550, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "GS", "model": "GS42", "outdoor": "MUZ-GS42", "kw": 4.2, "w": 800, "h": 550, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "GS", "model": "GS50", "outdoor": "MUZ-GS50VFD", "kw": 5, "w": 800, "h": 714, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "GS", "model": "GS60", "outdoor": "MUZ-GS60VFD", "kw": 6, "w": 800, "h": 714, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "GS", "model": "GS71", "outdoor": "MUZ-GS71VFD", "kw": 7.1, "w": 800, "h": 714, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "GS", "model": "GS80", "outdoor": "MUZ-GS80VFD", "kw": 8, "w": 840, "h": 880, "d": 330, "recommended": "Large", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "AP", "model": "AP25", "outdoor": "MUZ-AP25VGD", "kw": 2.5, "w": 800, "h": 550, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "AP", "model": "AP35", "outdoor": "MUZ-AP35VGD", "kw": 3.5, "w": 800, "h": 550, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "AP", "model": "AP42", "outdoor": "MUZ-AP42VGD", "kw": 4.2, "w": 800, "h": 550, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "AP", "model": "AP50", "outdoor": "MUZ-AP50VGD", "kw": 5, "w": 800, "h": 714, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "AP", "model": "AP60", "outdoor": "MUZ-AP60VGD", "kw": 6, "w": 800, "h": 714, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "LN", "model": "LN25", "outdoor": "MUZ-LN25VGHZ", "kw": 2.5, "w": 800, "h": 550, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "LN", "model": "LN35", "outdoor": "MUZ-LN35VGHZ", "kw": 3.5, "w": 800, "h": 550, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "LN", "model": "LN50", "outdoor": "MUZ-LN50VG", "kw": 5, "w": 800, "h": 714, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "EF", "model": "EF25", "outdoor": "MUZ-EF25VG", "kw": 2.5, "w": 800, "h": 550, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "EF", "model": "EF35", "outdoor": "MUZ-EF35VG", "kw": 3.5, "w": 800, "h": 550, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "GE", "model": "GE25", "outdoor": "MUZ-GE25VA", "kw": 2.5, "w": 800, "h": 550, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "GE", "model": "GE35", "outdoor": "MUZ-GE35VA", "kw": 3.5, "w": 800, "h": 550, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Daikin", "series": "Cora", "model": "FTXM20", "outdoor": "RXM20", "kw": 2, "w": 675, "h": 550, "d": 284, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Daikin", "series": "Cora", "model": "FTXM25", "outdoor": "RXM25", "kw": 2.5, "w": 675, "h": 550, "d": 284, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Daikin", "series": "Cora", "model": "FTXM35", "outdoor": "RXM35", "kw": 3.5, "w": 675, "h": 550, "d": 284, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Daikin", "series": "Cora", "model": "FTXM46", "outdoor": "RXM46", "kw": 4.6, "w": 675, "h": 550, "d": 284, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Daikin", "series": "Cora", "model": "FTXM50", "outdoor": "RXM50", "kw": 5, "w": 930, "h": 695, "d": 350, "recommended": "Large", "fit": "Tight Fit"}, {"brand": "Daikin", "series": "Cora", "model": "FTXM60", "outdoor": "RXM60", "kw": 6, "w": 930, "h": 695, "d": 350, "recommended": "Large", "fit": "Tight Fit"}, {"brand": "Daikin", "series": "Lite", "model": "FTXF20", "outdoor": "RXF20", "kw": 2, "w": 770, "h": 550, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Daikin", "series": "Lite", "model": "FTXF25", "outdoor": "RXF25", "kw": 2.5, "w": 658, "h": 550, "d": 275, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Daikin", "series": "Lite", "model": "FTXF35", "outdoor": "RXF35", "kw": 3.5, "w": 658, "h": 550, "d": 275, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Daikin", "series": "Lite", "model": "FTXF50", "outdoor": "RXF50", "kw": 5, "w": 658, "h": 550, "d": 275, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Daikin", "series": "Zena", "model": "FTXJ25", "outdoor": "RXJ25", "kw": 2.5, "w": 780, "h": 550, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Daikin", "series": "Zena", "model": "FTXJ35", "outdoor": "RXJ35", "kw": 3.5, "w": 780, "h": 550, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Daikin", "series": "Alira", "model": "FTXM25A", "outdoor": "RXM25A", "kw": 2.5, "w": 765, "h": 550, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Daikin", "series": "Alira", "model": "FTXM35A", "outdoor": "RXM35A", "kw": 3.5, "w": 765, "h": 550, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Fujitsu", "series": "Lifestyle", "model": "ASTG09", "outdoor": "AOTG09LVCC", "kw": 2.5, "w": 765, "h": 541, "d": 275, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Fujitsu", "series": "Lifestyle", "model": "ASTG12", "outdoor": "AOTG12LVCC", "kw": 3.5, "w": 765, "h": 541, "d": 275, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Fujitsu", "series": "Lifestyle", "model": "ASTG14", "outdoor": "AOTG14LVCC", "kw": 4, "w": 765, "h": 541, "d": 275, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Fujitsu", "series": "Lifestyle", "model": "ASTG18", "outdoor": "AOTG18LVCC", "kw": 5, "w": 800, "h": 641, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Fujitsu", "series": "Lifestyle", "model": "ASTG22", "outdoor": "AOTG22LVCC", "kw": 6, "w": 800, "h": 641, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Fujitsu", "series": "Comfort", "model": "ASTH09", "outdoor": "AOTH09", "kw": 2.5, "w": 765, "h": 541, "d": 275, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Fujitsu", "series": "Comfort", "model": "ASTH12", "outdoor": "AOTH12", "kw": 3.5, "w": 765, "h": 541, "d": 275, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Fujitsu", "series": "Comfort", "model": "ASTH18", "outdoor": "AOTH18", "kw": 5, "w": 800, "h": 641, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "Z Series", "model": "CS-Z20", "outdoor": "CU-Z20", "kw": 2, "w": 780, "h": 542, "d": 289, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "Z Series", "model": "CS-Z25", "outdoor": "CU-Z25", "kw": 2.5, "w": 780, "h": 542, "d": 289, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "Z Series", "model": "CS-Z35", "outdoor": "CU-Z35", "kw": 3.5, "w": 780, "h": 542, "d": 289, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "Z Series", "model": "CS-Z42", "outdoor": "CU-Z42", "kw": 4.2, "w": 780, "h": 542, "d": 289, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "Z Series", "model": "CS-Z50", "outdoor": "CU-Z50", "kw": 5, "w": 824, "h": 619, "d": 299, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "U Series", "model": "CS-U25", "outdoor": "CU-U25", "kw": 2.5, "w": 780, "h": 542, "d": 289, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "U Series", "model": "CS-U35", "outdoor": "CU-U35", "kw": 3.5, "w": 780, "h": 542, "d": 289, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "U Series", "model": "CS-U50", "outdoor": "CU-U50", "kw": 5, "w": 875, "h": 695, "d": 320, "recommended": "Large", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "Aero", "model": "CS-RZ25", "outdoor": "CU-RZ25", "kw": 2.5, "w": 780, "h": 542, "d": 289, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "Aero", "model": "CS-RZ35", "outdoor": "CU-RZ35", "kw": 3.5, "w": 780, "h": 542, "d": 289, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Haier", "series": "Tundra", "model": "AS26T", "outdoor": "1U26T", "kw": 2.6, "w": 800, "h": 553, "d": 280, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Haier", "series": "Tundra", "model": "AS35T", "outdoor": "1U35T", "kw": 3.5, "w": 800, "h": 553, "d": 280, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Haier", "series": "Tundra", "model": "AS50T", "outdoor": "1U50T", "kw": 5, "w": 890, "h": 700, "d": 340, "recommended": "Large", "fit": "Good Fit"}, {"brand": "Haier", "series": "Flexis", "model": "AS25F", "outdoor": "1U25F", "kw": 2.5, "w": 800, "h": 553, "d": 280, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Haier", "series": "Flexis", "model": "AS35F", "outdoor": "1U35F", "kw": 3.5, "w": 800, "h": 553, "d": 280, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Haier", "series": "Flexis", "model": "AS50F", "outdoor": "1U50F", "kw": 5, "w": 890, "h": 700, "d": 340, "recommended": "Large", "fit": "Good Fit"}, {"brand": "Gree", "series": "Lomo", "model": "GWH09", "outdoor": "GWH09", "kw": 2.6, "w": 782, "h": 540, "d": 320, "recommended": "Large", "fit": "Good Fit"}, {"brand": "Gree", "series": "Lomo", "model": "GWH12", "outdoor": "GWH12", "kw": 3.5, "w": 848, "h": 596, "d": 320, "recommended": "Large", "fit": "Good Fit"}, {"brand": "Gree", "series": "Lomo", "model": "GWH18", "outdoor": "GWH18", "kw": 5.2, "w": 965, "h": 700, "d": 396, "recommended": "Too Large", "fit": "Custom size required"}, {"brand": "Gree", "series": "Amber", "model": "GWH09B", "outdoor": "GWH09B", "kw": 2.6, "w": 780, "h": 540, "d": 300, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Gree", "series": "Amber", "model": "GWH12B", "outdoor": "GWH12B", "kw": 3.5, "w": 780, "h": 540, "d": 300, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Gree", "series": "Amber", "model": "GWH18B", "outdoor": "GWH18B", "kw": 5.2, "w": 848, "h": 596, "d": 320, "recommended": "Large", "fit": "Good Fit"}, {"brand": "Toshiba", "series": "Hi-Wall", "model": "RAS-10", "outdoor": "RAS-10", "kw": 2.5, "w": 780, "h": 550, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Toshiba", "series": "Hi-Wall", "model": "RAS-13", "outdoor": "RAS-13", "kw": 3.5, "w": 780, "h": 550, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Toshiba", "series": "Hi-Wall", "model": "RAS-18", "outdoor": "RAS-18", "kw": 5, "w": 800, "h": 630, "d": 300, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Toshiba", "series": "Hi-Wall", "model": "RAS-22", "outdoor": "RAS-22", "kw": 6, "w": 800, "h": 630, "d": 300, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Hitachi", "series": "Takai", "model": "RAS25", "outdoor": "RAC25", "kw": 2.5, "w": 780, "h": 570, "d": 280, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Hitachi", "series": "Takai", "model": "RAS35", "outdoor": "RAC35", "kw": 3.5, "w": 780, "h": 570, "d": 280, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Hitachi", "series": "Takai", "model": "RAS50", "outdoor": "RAC50", "kw": 5, "w": 800, "h": 650, "d": 300, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Samsung", "series": "AR Series", "model": "AR09", "outdoor": "AR09", "kw": 2.5, "w": 790, "h": 548, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Samsung", "series": "AR Series", "model": "AR12", "outdoor": "AR12", "kw": 3.5, "w": 790, "h": 548, "d": 285, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Samsung", "series": "AR Series", "model": "AR18", "outdoor": "AR18", "kw": 5, "w": 880, "h": 638, "d": 310, "recommended": "Large", "fit": "Good Fit"}, {"brand": "Midea", "series": "Mission", "model": "MSAG-09", "outdoor": "MOX130-09", "kw": 2.6, "w": 805, "h": 554, "d": 330, "recommended": "Large", "fit": "Good Fit"}, {"brand": "Midea", "series": "Mission", "model": "MSAG-12", "outdoor": "MOX230-12", "kw": 3.5, "w": 805, "h": 554, "d": 330, "recommended": "Large", "fit": "Good Fit"}, {"brand": "Midea", "series": "Mission", "model": "MSAG-18", "outdoor": "MOX330-18", "kw": 5.2, "w": 805, "h": 554, "d": 330, "recommended": "Large", "fit": "Good Fit"}, {"brand": "MHI", "series": "Ciara", "model": "SRK20ZSA", "outdoor": "SRC20ZSA-W", "kw": 2, "w": 645, "h": 540, "d": 275, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Ciara", "model": "SRK25ZSA", "outdoor": "SRC25ZSA-W", "kw": 2.5, "w": 645, "h": 540, "d": 275, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Ciara", "model": "SRK35ZSA", "outdoor": "SRC35ZSA-W", "kw": 3.5, "w": 645, "h": 540, "d": 275, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Ciara", "model": "SRK50ZSA", "outdoor": "SRC50ZSA-W", "kw": 5, "w": 780, "h": 595, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Ciara", "model": "SRK60ZSA", "outdoor": "SRC60ZSA-W", "kw": 6, "w": 800, "h": 640, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Ciara", "model": "SRK71ZSA", "outdoor": "SRC71ZSA-W", "kw": 7.1, "w": 800, "h": 640, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti", "model": "SRK25ZMA", "outdoor": "SRC25ZMA-W", "kw": 2.5, "w": 780, "h": 540, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti", "model": "SRK35ZMA", "outdoor": "SRC35ZMA-W", "kw": 3.5, "w": 780, "h": 540, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti", "model": "SRK50ZMA", "outdoor": "SRC50ZMA-W", "kw": 5, "w": 780, "h": 540, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti", "model": "SRK60ZMA", "outdoor": "SRC60ZMA-W", "kw": 6, "w": 780, "h": 540, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti", "model": "SRK71ZMA", "outdoor": "SRC71ZMA-W", "kw": 7.1, "w": 780, "h": 540, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti", "model": "SRK80ZMA", "outdoor": "SRC80ZMA-W", "kw": 8, "w": 780, "h": 540, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti Plus", "model": "SRK25ZRA", "outdoor": "SRC25ZRA-W", "kw": 2.5, "w": 800, "h": 640, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti Plus", "model": "SRK35ZRA", "outdoor": "SRC35ZRA-W", "kw": 3.5, "w": 800, "h": 640, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti Plus", "model": "SRK50ZRA", "outdoor": "SRC50ZRA-W", "kw": 5, "w": 800, "h": 640, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti Plus", "model": "SRK60ZRA", "outdoor": "SRC60ZRA-W", "kw": 6, "w": 800, "h": 640, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti Plus", "model": "SRK71ZRA", "outdoor": "SRC71ZRA-W", "kw": 7.1, "w": 800, "h": 640, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti Plus", "model": "SRK80ZRA", "outdoor": "SRC80ZRA-W", "kw": 8, "w": 800, "h": 640, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Bronte", "model": "SRK90ZSA-B", "outdoor": "SRC90ZSA-W", "kw": 9, "w": 800, "h": 640, "d": 290, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Bronte", "model": "SRK125ZSA-B", "outdoor": "SRC125ZSA-W", "kw": 12.5, "w": 800, "h": 640, "d": 290, "recommended": "Medium", "fit": "Good Fit"}];
+
+const SIZE_URLS = {
+'Small': 'https://www.pacificheatpumpcovers.com/product-page/classic-heat-pump-cover',
+'Medium': 'https://www.pacificheatpumpcovers.com/product-page/medium-classic-heat-pump-cover',
+'Large': 'https://www.pacificheatpumpcovers.com/product-page/large-classic-heat-pump-cover'
+};
 
 const brandSel = document.getElementById('hpc-brand');
 const modelSel = document.getElementById('hpc-model');
@@ -381,6 +420,7 @@ function showResult(row){
   const note = document.getElementById('hpc-note');
   const ctaHint = document.getElementById('hpc-cta-hint');
   const ctaSize = document.getElementById('hpc-cta-size');
+const orderLink = document.getElementById('hpc-order-link');
 
   document.getElementById('hpc-d-brand').textContent = row.series ? `${row.brand} — ${row.series}` : row.brand;
   document.getElementById('hpc-d-model').textContent = `${row.model} / ${row.outdoor}`;
@@ -394,12 +434,15 @@ function showResult(row){
     pill.textContent = 'Custom size required';
     note.className = 'hpc-note custom-note';
     note.textContent = "This outdoor unit is larger than our biggest standard Classic cover (Large). No problem — we build custom-sized covers all the time. Get in touch with your unit's dimensions and we'll quote a custom fit.";
-    ctaHint.style.display = 'none';
+    badge.removeAttribute('href');
+ctaHint.style.display = 'none';
   } else {
     badge.textContent = row.recommended;
     badge.classList.remove('custom');
     ctaHint.style.display = '';
     ctaSize.textContent = row.recommended;
+const sizeUrl = SIZE_URLS[row.recommended];
+if(sizeUrl){ badge.href = sizeUrl; orderLink.href = sizeUrl; }
     if(row.fit === 'Tight Fit'){
       pill.className = 'hpc-fit-pill tight';
       pill.textContent = 'Tight Fit';

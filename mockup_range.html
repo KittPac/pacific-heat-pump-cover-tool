@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pacific Outdoor Solutions — Our Range (Concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF3E9;
+    --cream-2:#F6E9D8;
+    --coral:#D8592F;
+    --coral-dark:#B7431F;
+    --teal:#0F6E56;
+    --teal-dark:#084237;
+    --ink:#22201C;
+    --ink-soft:#5B564C;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Inter',sans-serif;color:var(--ink);background:var(--cream);}
+  h1,h2,h3{font-family:'Poppins',sans-serif;margin:0;}
+  a{text-decoration:none;color:inherit;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 40px;}
+  header{background:var(--cream);padding:22px 0;border-bottom:1px solid rgba(0,0,0,0.06);}
+  .headerbar{display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-family:'Poppins',sans-serif;font-weight:800;font-size:24px;letter-spacing:-0.5px;color:var(--teal-dark);}
+  .logo span{color:var(--coral);}
+  nav{display:flex;gap:34px;font-weight:600;font-size:15px;}
+  .navicons{display:flex;align-items:center;gap:18px;}
+  .pill-btn{background:var(--coral);color:#fff;padding:10px 22px;border-radius:999px;font-weight:700;font-size:14px;}
+  .icon-circle{width:38px;height:38px;border-radius:50%;background:var(--cream-2);display:flex;align-items:center;justify-content:center;font-size:16px;}
+
+  .pagehead{padding:56px 0 34px;text-align:center;}
+  .pagehead .chip{display:inline-block;background:#fff;color:var(--teal-dark);font-weight:700;font-size:13px;padding:7px 16px;border-radius:999px;margin-bottom:16px;}
+  .pagehead h1{font-size:44px;font-weight:800;}
+  .pagehead p{color:var(--ink-soft);font-size:17px;margin-top:12px;max-width:560px;margin-left:auto;margin-right:auto;}
+
+  .filters{display:flex;gap:12px;justify-content:center;padding-bottom:44px;flex-wrap:wrap;}
+  .filter-pill{background:#fff;border:2px solid transparent;padding:10px 20px;border-radius:999px;font-weight:600;font-size:14px;color:var(--ink-soft);}
+  .filter-pill.active{background:var(--teal-dark);color:#fff;}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;padding-bottom:100px;}
+  .card{background:#fff;border-radius:24px;overflow:hidden;display:flex;flex-direction:column;}
+  .card .imgwrap{background:var(--cream-2);padding:28px;display:flex;align-items:center;justify-content:center;height:220px;}
+  .card img{max-width:100%;max-height:100%;object-fit:contain;}
+  .card .body{padding:22px 24px 26px;}
+  .card .tag{display:inline-block;background:var(--cream-2);color:var(--teal-dark);font-size:11px;font-weight:700;padding:5px 12px;border-radius:999px;margin-bottom:10px;letter-spacing:.03em;text-transform:uppercase;}
+  .card h3{font-size:19px;margin-bottom:6px;}
+  .card .desc{color:var(--ink-soft);font-size:14px;line-height:1.5;margin-bottom:16px;}
+  .card .row{display:flex;align-items:center;justify-content:space-between;}
+  .card .price{font-weight:800;font-size:19px;color:var(--coral);}
+  .card .buy{background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-weight:700;font-size:13px;}
+  .card.wide{grid-column:span 3;display:grid;grid-template-columns:1fr 1fr;}
+  .card.wide .imgwrap{height:auto;}
+  .card.wide .body{display:flex;flex-direction:column;justify-content:center;padding:40px;}
+  .card.wide h3{font-size:26px;}
+  .card.wide .desc{font-size:15px;}
+
+  footer{background:var(--teal-dark);color:#EAF3EE;padding:50px 0;font-size:14px;}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap headerbar">
+    <div class="logo">Pacific <span>Outdoor</span></div>
+    <nav>
+      <a>Home</a><a style="color:var(--coral);">Our Range</a><a>Find Your Size</a><a>Installation</a><a>About</a>
+    </nav>
+    <div class="navicons">
+      <div class="icon-circle">&#128100;</div>
+      <div class="icon-circle">&#128722;</div>
+      <a class="pill-btn">Get a Quote</a>
+    </div>
+  </div>
+</header>
+
+<div class="pagehead">
+  <span class="chip">5 products &middot; NZ made</span>
+  <h1>Our Range</h1>
+  <p>Aluminium heat pump and gas bottle covers, powder-coated and built to handle whatever the Kiwi outdoors throws at them.</p>
+</div>
+
+<div class="filters">
+  <div class="filter-pill active">All covers</div>
+  <div class="filter-pill">Heat pump covers</div>
+  <div class="filter-pill">Gas bottle surrounds</div>
+  <div class="filter-pill">Chimney surrounds</div>
+</div>
+
+<div class="wrap">
+  <div class="grid">
+
+    <div class="card">
+      <div class="imgwrap"><img src="https://static.wixstatic.com/media/15ceb6_9235ea48c98d495da22e8d33bc85c32a~mv2.png" alt="Small Classic Heat Pump Cover"></div>
+      <div class="body">
+        <span class="tag">Heat pump cover</span>
+        <h3>Small Classic Cover</h3>
+        <div class="desc">Fits most compact units. Six powder-coat colours.</div>
+        <div class="row"><span class="price">$499</span><span class="buy">Shop now</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="imgwrap"><img src="https://static.wixstatic.com/media/15ceb6_1e5d493012a248c5979f3748c27f3c25~mv2.png" alt="Medium Classic Heat Pump Cover"></div>
+      <div class="body">
+        <span class="tag">Heat pump cover</span>
+        <h3>Medium Classic Cover</h3>
+        <div class="desc">Our most popular size &mdash; fits most NZ homes.</div>
+        <div class="row"><span class="price">$699</span><span class="buy">Shop now</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="imgwrap"><img src="https://static.wixstatic.com/media/15ceb6_70a10621b95a41bf90af0941ecd61f48~mv2.png" alt="Large Classic Heat Pump Cover"></div>
+      <div class="body">
+        <span class="tag">Heat pump cover</span>
+        <h3>Large Classic Cover</h3>
+        <div class="desc">For bigger units and ducted systems.</div>
+        <div class="row"><span class="price">$899</span><span class="buy">Shop now</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="imgwrap"><img src="https://static.wixstatic.com/media/15ceb6_752c0ca4e1c04e8ab10f7f772772142d~mv2.png" alt="Classic Gas Bottle Surrounds"></div>
+      <div class="body">
+        <span class="tag">Gas bottle surround</span>
+        <h3>Classic Gas Bottle Surrounds</h3>
+        <div class="desc">Keeps bottles secure, ventilated and out of sight.</div>
+        <div class="row"><span class="price">$1,667.50</span><span class="buy">Shop now</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="imgwrap"><img src="https://static.wixstatic.com/media/15ceb6_bf2e0e4e98f248d08a1b0152c69d7606~mv2.png" alt="Chimney Surrounds"></div>
+      <div class="body">
+        <span class="tag">Chimney surround</span>
+        <h3>Chimney Surrounds</h3>
+        <div class="desc">A tidy, weatherproof finish for flue and chimney bases.</div>
+        <div class="row"><span class="price">$580</span><span class="buy">Shop now</span></div>
+      </div>
+    </div>
+
+    <div class="card" style="background:var(--teal-dark);color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:30px;">
+      <div>
+        <h3 style="color:#fff;margin-bottom:10px;">Not sure what fits?</h3>
+        <div class="desc" style="color:#D7E9E2;margin-bottom:18px;">Use our free tool &mdash; tell us your brand and model, we'll tell you the size.</div>
+        <a class="buy" style="background:var(--coral);">Find your size</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div><b>Pacific Outdoor Solutions</b><br>Napier, Hawke's Bay &middot; NZ-wide shipping</div>
+    <div>Home &middot; Our Range &middot; Find Your Size &middot; Installation &middot; Contact</div>
+  </div>
+</footer>
+
+</body>
+</html>

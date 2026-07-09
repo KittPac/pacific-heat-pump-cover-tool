@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Medium Classic Cover — Product (Concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF3E9;
+    --cream-2:#F6E9D8;
+    --coral:#D8592F;
+    --coral-dark:#B7431F;
+    --teal:#0F6E56;
+    --teal-dark:#084237;
+    --ink:#22201C;
+    --ink-soft:#5B564C;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Inter',sans-serif;color:var(--ink);background:var(--cream);}
+  h1,h2,h3{font-family:'Poppins',sans-serif;margin:0;}
+  a{text-decoration:none;color:inherit;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 40px;}
+  header{background:var(--cream);padding:22px 0;border-bottom:1px solid rgba(0,0,0,0.06);}
+  .headerbar{display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-family:'Poppins',sans-serif;font-weight:800;font-size:24px;letter-spacing:-0.5px;color:var(--teal-dark);}
+  .logo span{color:var(--coral);}
+  nav{display:flex;gap:34px;font-weight:600;font-size:15px;}
+  .navicons{display:flex;align-items:center;gap:18px;}
+  .pill-btn{background:var(--coral);color:#fff;padding:10px 22px;border-radius:999px;font-weight:700;font-size:14px;}
+  .icon-circle{width:38px;height:38px;border-radius:50%;background:var(--cream-2);display:flex;align-items:center;justify-content:center;font-size:16px;}
+
+  .crumbs{padding:26px 0 0;font-size:13px;color:var(--ink-soft);}
+  .crumbs a{color:var(--ink-soft);}
+  .crumbs .cur{color:var(--ink);font-weight:600;}
+
+  .product{padding:34px 0 90px;display:grid;grid-template-columns:1fr 1fr;gap:64px;}
+  .gallery-main{background:#fff;border-radius:26px;padding:40px;height:440px;display:flex;align-items:center;justify-content:center;}
+  .gallery-main img{max-width:100%;max-height:100%;object-fit:contain;}
+  .gallery-thumbs{display:flex;gap:12px;margin-top:16px;}
+  .thumb{width:70px;height:70px;border-radius:14px;background:#fff;border:2px solid transparent;display:flex;align-items:center;justify-content:center;padding:8px;}
+  .thumb.active{border-color:var(--coral);}
+  .thumb img{max-width:100%;max-height:100%;object-fit:contain;}
+
+  .info .tag{display:inline-block;background:var(--cream-2);color:var(--teal-dark);font-size:12px;font-weight:700;padding:6px 14px;border-radius:999px;margin-bottom:16px;letter-spacing:.03em;text-transform:uppercase;}
+  .info h1{font-size:38px;font-weight:800;margin-bottom:10px;}
+  .stars{color:var(--coral);font-size:14px;margin-bottom:18px;}
+  .stars span{color:var(--ink-soft);margin-left:6px;}
+  .price{font-size:30px;font-weight:800;color:var(--coral);margin-bottom:20px;}
+  .info p.desc{color:var(--ink-soft);font-size:16px;line-height:1.7;margin-bottom:26px;}
+
+  .opt-label{font-weight:700;font-size:14px;margin-bottom:10px;}
+  .swatches{display:flex;gap:10px;margin-bottom:26px;}
+  .swatch{width:34px;height:34px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px rgba(0,0,0,0.08);}
+  .swatch.sel{box-shadow:0 0 0 2px var(--coral);}
+
+  .cta-row{display:flex;gap:14px;margin-bottom:30px;}
+  .btn-primary{background:var(--coral);color:#fff;padding:17px 34px;border-radius:999px;font-weight:700;font-size:16px;box-shadow:0 8px 20px rgba(216,89,47,0.28);}
+  .btn-secondary{background:#fff;color:var(--ink);padding:17px 26px;border-radius:999px;font-weight:700;font-size:16px;border:2px solid var(--ink);}
+
+  .trust{display:flex;gap:22px;padding-top:22px;border-top:1px solid rgba(0,0,0,0.08);}
+  .trust-item{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--ink-soft);}
+  .trust-item .ic{width:34px;height:34px;border-radius:50%;background:var(--cream-2);display:flex;align-items:center;justify-content:center;color:var(--teal-dark);font-size:15px;}
+
+  section.details{background:var(--cream-2);padding:70px 0;}
+  .details-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;}
+  .details-grid h2{font-size:26px;font-weight:800;margin-bottom:16px;}
+  .spec-row{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid rgba(0,0,0,0.08);font-size:14px;}
+  .spec-row b{font-weight:700;}
+  .spec-row span{color:var(--ink-soft);}
+
+  footer{background:var(--teal-dark);color:#EAF3EE;padding:50px 0;font-size:14px;}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap headerbar">
+    <div class="logo">Pacific <span>Outdoor</span></div>
+    <nav>
+      <a>Home</a><a>Our Range</a><a>Find Your Size</a><a>Installation</a><a>About</a>
+    </nav>
+    <div class="navicons">
+      <div class="icon-circle">&#128100;</div>
+      <div class="icon-circle">&#128722;</div>
+      <a class="pill-btn">Get a Quote</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumbs"><a>Home</a> / <a>Our Range</a> / <span class="cur">Medium Classic Cover</span></div>
+
+  <div class="product">
+    <div>
+      <div class="gallery-main"><img src="https://static.wixstatic.com/media/15ceb6_1e5d493012a248c5979f3748c27f3c25~mv2.png" alt="Medium Classic Heat Pump Cover"></div>
+      <div class="gallery-thumbs">
+        <div class="thumb active"><img src="https://static.wixstatic.com/media/15ceb6_1e5d493012a248c5979f3748c27f3c25~mv2.png" alt=""></div>
+        <div class="thumb"><img src="https://static.wixstatic.com/media/15ceb6_a5de8de50a2d4521ba29158a9803b72a~mv2.png" alt=""></div>
+        <div class="thumb"><img src="https://static.wixstatic.com/media/15ceb6_17ebb1078922428cbb2bdc3a35b5a53c~mv2.png" alt=""></div>
+        <div class="thumb"><img src="https://static.wixstatic.com/media/15ceb6_771f343d809e41dc9f36053585ab1318~mv2.png" alt=""></div>
+      </div>
+    </div>
+
+    <div class="info">
+      <span class="tag">Heat pump cover</span>
+      <h1>Medium Classic Cover</h1>
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>Our most popular size</span></div>
+      <div class="price">$699.00 NZD</div>
+      <p class="desc">Fits most standard NZ heat pump units including Mitsubishi, Fujitsu, Daikin and Panasonic. Powder-coated aluminium with 360&deg; vented airflow &mdash; keeps your unit efficient, your warranty valid, and your outdoor space looking sharp.</p>
+
+      <div class="opt-label">Colour</div>
+      <div class="swatches">
+        <div class="swatch sel" style="background:#2B2B2B;"></div>
+        <div class="swatch" style="background:#8C8C8C;"></div>
+        <div class="swatch" style="background:#D8592F;"></div>
+        <div class="swatch" style="background:#0F6E56;"></div>
+        <div class="swatch" style="background:#F3EFE6;border:3px solid #ddd;"></div>
+        <div class="swatch" style="background:#3B4A5A;"></div>
+      </div>
+
+      <div class="cta-row">
+        <a class="btn-primary">Add to cart &mdash; $699</a>
+        <a class="btn-secondary">Ask a question</a>
+      </div>
+
+      <div class="trust">
+        <div class="trust-item"><div class="ic">&#9989;</div>NZ made</div>
+        <div class="trust-item"><div class="ic">&#128230;</div>Ships nationwide</div>
+        <div class="trust-item"><div class="ic">&#128737;</div>Warranty safe</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="details">
+  <div class="wrap details-grid">
+    <div>
+      <h2>Specifications</h2>
+      <div class="spec-row"><b>Dimensions</b><span>900W x 700H x 400D mm</span></div>
+      <div class="spec-row"><b>Material</b><span>Powder-coated aluminium</span></div>
+      <div class="spec-row"><b>Colours</b><span>6 standard, custom on request</span></div>
+      <div class="spec-row"><b>Airflow</b><span>360&deg; vented slats</span></div>
+      <div class="spec-row"><b>Made in</b><span>Napier, Hawke's Bay</span></div>
+    </div>
+    <div>
+      <h2>Why this size</h2>
+      <p style="color:var(--ink-soft);font-size:15px;line-height:1.7;">The Medium Classic is our best seller &mdash; it's the right fit for most single-split systems on New Zealand homes. Not sure it's right for your unit? Use our free Find Your Size tool and we'll match it to your brand and model in under a minute.</p>
+      <a class="btn-secondary" style="display:inline-block;margin-top:10px;">Find your size &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div><b>Pacific Outdoor Solutions</b><br>Napier, Hawke's Bay &middot; NZ-wide shipping</div>
+    <div>Home &middot; Our Range &middot; Find Your Size &middot; Installation &middot; Contact</div>
+  </div>
+</footer>
+
+</body>
+</html>

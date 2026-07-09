@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pacific Outdoor Solutions — Home (Concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF3E9;
+    --cream-2:#F6E9D8;
+    --coral:#D8592F;
+    --coral-dark:#B7431F;
+    --teal:#0F6E56;
+    --teal-dark:#084237;
+    --ink:#22201C;
+    --ink-soft:#5B564C;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Inter',sans-serif;color:var(--ink);background:var(--cream);}
+  h1,h2,h3{font-family:'Poppins',sans-serif;margin:0;}
+  a{text-decoration:none;color:inherit;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 40px;}
+  header{background:var(--cream);padding:22px 0;border-bottom:1px solid rgba(0,0,0,0.06);}
+  .headerbar{display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-family:'Poppins',sans-serif;font-weight:800;font-size:24px;letter-spacing:-0.5px;color:var(--teal-dark);}
+  .logo span{color:var(--coral);}
+  nav{display:flex;gap:34px;font-weight:600;font-size:15px;color:var(--ink);}
+  .navicons{display:flex;align-items:center;gap:18px;}
+  .pill-btn{background:var(--coral);color:#fff;padding:10px 22px;border-radius:999px;font-weight:700;font-size:14px;display:inline-block;}
+  .icon-circle{width:38px;height:38px;border-radius:50%;background:var(--cream-2);display:flex;align-items:center;justify-content:center;font-size:16px;}
+
+  .hero{position:relative;padding:70px 0 0;overflow:hidden;}
+  .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;}
+  .hero h1{font-size:58px;line-height:1.05;font-weight:800;color:var(--ink);}
+  .hero h1 .accent{color:var(--coral);}
+  .hero p{font-size:19px;line-height:1.6;color:var(--ink-soft);margin:22px 0 32px;max-width:460px;}
+  .hero-ctas{display:flex;gap:16px;}
+  .btn-primary{background:var(--coral);color:#fff;padding:16px 30px;border-radius:999px;font-weight:700;font-size:16px;box-shadow:0 8px 20px rgba(216,89,47,0.28);}
+  .btn-secondary{background:#fff;color:var(--ink);padding:16px 30px;border-radius:999px;font-weight:700;font-size:16px;border:2px solid var(--ink);}
+  .hero-img{border-radius:28px;overflow:hidden;position:relative;}
+  .hero-img img{width:100%;display:block;}
+  .badge-float{position:absolute;bottom:-22px;left:-22px;background:#fff;border-radius:20px;padding:16px 20px;box-shadow:0 14px 30px rgba(0,0,0,0.12);display:flex;align-items:center;gap:12px;}
+  .badge-float .dot{width:44px;height:44px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;}
+  .badge-float .txt b{display:block;font-size:14px;}
+  .badge-float .txt span{font-size:12px;color:var(--ink-soft);}
+
+  .wave{display:block;width:100%;line-height:0;}
+
+  .strip{background:var(--teal-dark);color:#fff;padding:26px 0;}
+  .strip .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+  .strip-item{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:600;}
+  .strip-item .n{font-family:'Poppins',sans-serif;font-weight:800;font-size:22px;color:#FFD9C4;}
+
+  section.range{padding:90px 0;}
+  .section-head{text-align:center;max-width:640px;margin:0 auto 50px;}
+  .section-head h2{font-size:38px;font-weight:800;}
+  .section-head p{color:var(--ink-soft);font-size:17px;margin-top:14px;}
+  .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  .prod-card{background:#fff;border-radius:22px;padding:26px;text-align:center;transition:transform .2s;}
+  .prod-card .imgwrap{background:var(--cream-2);border-radius:16px;padding:20px;margin-bottom:18px;}
+  .prod-card img{width:100%;height:170px;object-fit:contain;}
+  .prod-card h3{font-size:19px;margin-bottom:6px;}
+  .prod-card .price{color:var(--coral);font-weight:800;font-size:17px;margin-bottom:14px;}
+  .prod-card a.mini{display:inline-block;padding:10px 22px;border-radius:999px;border:2px solid var(--ink);font-weight:700;font-size:13px;}
+
+  section.story{background:var(--cream-2);padding:90px 0;}
+  .story-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+  .story-grid img{width:100%;border-radius:24px;}
+  .story-grid h2{font-size:34px;font-weight:800;margin-bottom:18px;}
+  .story-grid p{color:var(--ink-soft);font-size:16px;line-height:1.7;margin-bottom:14px;}
+  .chip{display:inline-block;background:#fff;color:var(--teal-dark);font-weight:700;font-size:13px;padding:7px 16px;border-radius:999px;margin-bottom:18px;}
+
+  section.cta{padding:100px 0;text-align:center;}
+  .cta-box{background:var(--coral);border-radius:32px;padding:70px 40px;color:#fff;}
+  .cta-box h2{font-size:38px;font-weight:800;margin-bottom:16px;}
+  .cta-box p{font-size:17px;opacity:0.92;max-width:520px;margin:0 auto 30px;}
+  .cta-box .btn-primary{background:#fff;color:var(--coral-dark);box-shadow:none;}
+
+  footer{background:var(--teal-dark);color:#EAF3EE;padding:50px 0;font-size:14px;}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap headerbar">
+    <div class="logo">Pacific <span>Outdoor</span></div>
+    <nav>
+      <a>Home</a><a>Our Range</a><a>Find Your Size</a><a>Installation</a><a>About</a>
+    </nav>
+    <div class="navicons">
+      <div class="icon-circle">&#128100;</div>
+      <div class="icon-circle">&#128722;</div>
+      <a class="pill-btn">Get a Quote</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Hide the box.<br>Keep the <span class="accent">warmth.</span></h1>
+      <p>Handmade in Napier, our aluminium heat pump covers turn an eyesore into something you'll actually want on your deck &mdash; built for Kiwi weather, made to fit your home.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary">Shop covers</a>
+        <a class="btn-secondary">Find your size</a>
+      </div>
+    </div>
+    <div class="hero-img">
+      <img src="https://static.wixstatic.com/media/15ceb6_3b57f48f38944b1a84974943e4b950d2~mv2.jpg" alt="Heat pump cover on deck">
+      <div class="badge-float">
+        <div class="dot">5★</div>
+        <div class="txt"><b>Loved by Kiwi homes</b><span>NZ-made &amp; warranty backed</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" style="margin-top:70px;">
+  <path fill="#0F6E56" d="M0,32L80,42.7C160,53,320,75,480,74.7C640,75,800,53,960,42.7C1120,32,1280,32,1360,32L1440,32L1440,90L0,90Z"></path>
+</svg>
+
+<div class="strip">
+  <div class="wrap">
+    <div class="strip-item"><span class="n">40%</span> quieter outdoors</div>
+    <div class="strip-item"><span class="n">100%</span> NZ made, Hawke's Bay</div>
+    <div class="strip-item"><span class="n">6</span> powder-coat colours</div>
+    <div class="strip-item"><span class="n">3</span> sizes + custom fit</div>
+  </div>
+</div>
+
+<section class="range">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Find your perfect fit</h2>
+      <p>Small, medium or large &mdash; sized to match most NZ heat pump brands, or we'll build to your exact measurements.</p>
+    </div>
+    <div class="card-grid">
+      <div class="prod-card">
+        <div class="imgwrap"><img src="https://static.wixstatic.com/media/15ceb6_9235ea48c98d495da22e8d33bc85c32a~mv2.png" alt="Small Classic Heat Pump Cover"></div>
+        <h3>Small Classic Cover</h3>
+        <div class="price">From $499</div>
+        <a class="mini">View cover</a>
+      </div>
+      <div class="prod-card">
+        <div class="imgwrap"><img src="https://static.wixstatic.com/media/15ceb6_1e5d493012a248c5979f3748c27f3c25~mv2.png" alt="Medium Classic Heat Pump Cover"></div>
+        <h3>Medium Classic Cover</h3>
+        <div class="price">From $699</div>
+        <a class="mini">View cover</a>
+      </div>
+      <div class="prod-card">
+        <div class="imgwrap"><img src="https://static.wixstatic.com/media/15ceb6_70a10621b95a41bf90af0941ecd61f48~mv2.png" alt="Large Classic Heat Pump Cover"></div>
+        <h3>Large Classic Cover</h3>
+        <div class="price">From $899</div>
+        <a class="mini">View cover</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="story">
+  <div class="wrap story-grid">
+    <img src="https://static.wixstatic.com/media/15ceb6_3b57f48f38944b1a84974943e4b950d2~mv2.jpg" alt="Cover installed on deck">
+    <div>
+      <span class="chip">Made in Hawke's Bay</span>
+      <h2>Built by the people who'll answer your call.</h2>
+      <p>Every cover is designed and powder-coated at our own workshop in Napier &mdash; not shipped in from overseas. When you order, you're talking to the people who actually make it.</p>
+      <p>Powder-coated aluminium stands up to coastal wind, salt air and UV without warping, rusting or fading &mdash; and keeps your warranty valid with proper 360&deg; airflow.</p>
+      <a class="btn-primary" style="margin-top:10px;">Our story</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <div class="cta-box">
+      <h2>Ready to hide that heat pump?</h2>
+      <p>Use our free size tool to find the right fit in under a minute, then order online or get a custom quote.</p>
+      <a class="btn-primary">Find your size &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div><b>Pacific Outdoor Solutions</b><br>Napier, Hawke's Bay &middot; NZ-wide shipping</div>
+    <div>Home &middot; Our Range &middot; Find Your Size &middot; Installation &middot; Contact</div>
+  </div>
+</footer>
+
+</body>
+</html>

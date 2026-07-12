@@ -49,9 +49,15 @@
   .info p.desc{color:var(--ink-soft);font-size:16px;line-height:1.7;margin-bottom:26px;}
 
   .opt-label{font-weight:700;font-size:14px;margin-bottom:10px;}
-  .swatches{display:flex;gap:10px;margin-bottom:26px;}
-  .swatch{width:34px;height:34px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px rgba(0,0,0,0.08);}
+  .swatches{display:flex;gap:10px;margin-bottom:18px;}
+  .swatch{width:34px;height:34px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px rgba(0,0,0,0.08);cursor:pointer;}
   .swatch.sel{box-shadow:0 0 0 2px var(--coral);}
+
+  .colour-more{margin-bottom:26px;}
+  .colour-more label{display:block;font-weight:700;font-size:14px;margin-bottom:8px;}
+  .colour-more select{width:100%;padding:13px 14px;border-radius:12px;border:2px solid rgba(0,0,0,0.12);font-size:14px;font-family:'Inter',sans-serif;background:#fff;color:var(--ink);cursor:pointer;}
+  .colour-more .hint{font-size:12px;color:var(--ink-soft);margin-top:6px;}
+  .fee-note{margin-top:10px;font-size:13px;color:var(--coral-dark);font-weight:700;min-height:18px;}
 
   .cta-row{display:flex;gap:14px;margin-bottom:30px;}
   .btn-primary{background:var(--coral);color:#fff;padding:17px 34px;border-radius:999px;font-weight:700;font-size:16px;box-shadow:0 8px 20px rgba(242,114,109,0.35);}
@@ -107,22 +113,48 @@
       <span class="tag">Heat pump cover</span>
       <h1>Medium Classic Cover</h1>
       <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>Our most popular size</span></div>
-      <div class="price">$699.00 NZD</div>
+      <div class="price" id="priceDisplay">$699.00 NZD</div>
       <p class="desc">Fits most standard NZ heat pump units including Mitsubishi, Fujitsu, Daikin and Panasonic. Powder-coated aluminium with 360&deg; vented airflow &mdash; keeps your unit efficient, your warranty valid, and your outdoor space looking sharp.</p>
 
       <div class="opt-label">Colour &mdash; standard range, included</div>
-      <div class="swatches">
-        <div class="swatch" style="background:#F0F1EF;border:3px solid #ddd;" title="Appliance White"></div>
-        <div class="swatch" style="background:#E8E9DF;border:3px solid #ddd;" title="Titania"></div>
-        <div class="swatch" style="background:#55554F;" title="Thunder Grey"></div>
-        <div class="swatch" style="background:#525A5B;" title="Grey Friars"></div>
-        <div class="swatch" style="background:#474645;" title="Flaxpod"></div>
-        <div class="swatch sel" style="background:#000000;" title="Black"></div>
+      <div class="swatches" id="standardSwatches">
+        <div class="swatch" data-name="Appliance White" style="background:#F0F1EF;border:3px solid #ddd;" title="Appliance White" onclick="selectStandard(this)"></div>
+        <div class="swatch" data-name="Titania" style="background:#E8E9DF;border:3px solid #ddd;" title="Titania" onclick="selectStandard(this)"></div>
+        <div class="swatch" data-name="Thunder Grey" style="background:#55554F;" title="Thunder Grey" onclick="selectStandard(this)"></div>
+        <div class="swatch" data-name="Grey Friars" style="background:#525A5B;" title="Grey Friars" onclick="selectStandard(this)"></div>
+        <div class="swatch" data-name="Flaxpod" style="background:#474645;" title="Flaxpod" onclick="selectStandard(this)"></div>
+        <div class="swatch sel" data-name="Black" style="background:#000000;" title="Black" onclick="selectStandard(this)"></div>
       </div>
-      <p style="font-size:13px;color:var(--ink-soft);margin:-14px 0 26px;">Want a different shade? Any colour from the <a href="https://www.duluxpowders.co.nz/colour-ranges/" target="_blank" rel="noopener" style="color:var(--teal-dark);text-decoration:underline;">Dulux Duralloy range</a> is +$20, or the coastal-rated Duratec range is +$30.</p>
+
+      <div class="colour-more">
+        <label for="colourExtra">Or choose from our full colour range</label>
+        <select id="colourExtra" onchange="selectExtra()">
+          <option value="" data-fee="0" selected>Use a standard colour above</option>
+          <optgroup label="Dulux Duralloy range (+$20)">
+            <option data-fee="20">Charcoal</option>
+            <option data-fee="20">Ironsand</option>
+            <option data-fee="20">Gravel</option>
+            <option data-fee="20">Bronco</option>
+            <option data-fee="20">Desert Sand</option>
+            <option data-fee="20">Magnolia</option>
+            <option data-fee="20">Surfmist</option>
+            <option data-fee="20">Permanent Green</option>
+          </optgroup>
+          <optgroup label="Dulux Duratec range &#8212; coastal (+$30)">
+            <option data-fee="30">Grey Woodland</option>
+            <option data-fee="30">Blue Navy</option>
+            <option data-fee="30">Storm Blue</option>
+            <option data-fee="30">Grey Sandstone</option>
+            <option data-fee="30">Bronze Mid</option>
+            <option data-fee="30">Silver Bright</option>
+          </optgroup>
+        </select>
+        <div class="fee-note" id="feeNote"></div>
+        <div class="hint">Full <a href="https://www.duluxpowders.co.nz/colour-ranges/" target="_blank" rel="noopener" style="color:var(--teal-dark);text-decoration:underline;">Dulux colour range &rarr;</a></div>
+      </div>
 
       <div class="cta-row">
-        <a class="btn-primary">Add to cart &mdash; $699</a>
+        <a class="btn-primary" id="cartBtn">Add to cart &mdash; $699</a>
         <a class="btn-secondary">Ask a question</a>
       </div>
 
@@ -162,6 +194,37 @@
     <div>Home &middot; Our Range &middot; Find Your Size &middot; Installation &middot; Contact</div>
   </div>
 </footer>
+
+<script>
+  var basePrice = 699;
+
+  function selectStandard(el){
+    document.querySelectorAll('#standardSwatches .swatch').forEach(function(s){ s.classList.remove('sel'); });
+    el.classList.add('sel');
+    document.getElementById('colourExtra').selectedIndex = 0;
+    updateTotal(0, null);
+  }
+
+  function selectExtra(){
+    var sel = document.getElementById('colourExtra');
+    var opt = sel.options[sel.selectedIndex];
+    var fee = parseInt(opt.getAttribute('data-fee'), 10) || 0;
+    if (fee > 0) {
+      document.querySelectorAll('#standardSwatches .swatch').forEach(function(s){ s.classList.remove('sel'); });
+      updateTotal(fee, opt.textContent);
+    } else {
+      updateTotal(0, null);
+    }
+  }
+
+  function updateTotal(fee, colourName){
+    var total = basePrice + fee;
+    document.getElementById('priceDisplay').textContent = '$' + total.toFixed(2) + ' NZD';
+    document.getElementById('cartBtn').textContent = 'Add to cart — $' + total;
+    var note = document.getElementById('feeNote');
+    note.textContent = fee > 0 ? (colourName + ' colour: +$' + fee + ' added') : '';
+  }
+</script>
 
 </body>
 </html>

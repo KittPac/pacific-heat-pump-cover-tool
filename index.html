@@ -289,6 +289,33 @@ font-size:16px;
     color:var(--mid);
     margin-top:18px;
   }
+  .hpc-field input[type="number"]{
+    width:100%;
+    padding:12px 14px;
+    font-size:15px;
+    font-family:'Wix Madefor Text', sans-serif;
+    border:1.5px solid var(--sage);
+    border-radius:9px;
+    background:var(--white);
+    color:var(--dark);
+    transition:border-color .15s ease;
+  }
+  .hpc-field input[type="number"]:focus{
+    outline:none;
+    border-color:var(--teal);
+  }
+  .hpc-row-3{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:16px;
+    margin-bottom:20px;
+  }
+  @media (max-width:640px){
+    .hpc-row-3{grid-template-columns:1fr;}
+  }
+  .hpc-wrap-second{
+    margin-top:36px;
+  }
 </style>
 </head>
 <body>
@@ -347,6 +374,55 @@ font-size:16px;
 
     <div class="hpc-footer-note">
       Sizing based on Pacific Heat Pump Covers' Classic cover dimensions and published NZ heat pump brand data. Always confirm exact unit dimensions before ordering if your model isn't listed, or get in touch and we'll help.
+    </div>
+  </div>
+</div>
+
+<div class="hpc-wrap hpc-wrap-second">
+  <div class="hpc-header">
+    <h2>Chimney Surround Size Guide</h2>
+    <p>Enter your chimney's external dimensions in millimetres and we'll tell you whether Small or Large fits, or if you need a custom size.</p>
+  </div>
+
+  <div class="hpc-card">
+    <div class="hpc-row-3">
+      <div class="hpc-field">
+        <label for="csg-length">Length (mm)</label>
+        <input type="number" id="csg-length" placeholder="e.g. 800" min="1">
+      </div>
+      <div class="hpc-field">
+        <label for="csg-width">Width (mm)</label>
+        <input type="number" id="csg-width" placeholder="e.g. 800" min="1">
+      </div>
+      <div class="hpc-field">
+        <label for="csg-height">Height (mm)</label>
+        <input type="number" id="csg-height" placeholder="e.g. 750" min="1">
+      </div>
+    </div>
+
+    <div class="hpc-actions">
+      <button class="hpc-btn hpc-btn-primary" id="csg-find">Check My Size</button>
+      <button class="hpc-btn hpc-btn-secondary" id="csg-reset">Reset</button>
+    </div>
+
+    <div class="hpc-result" id="csg-result">
+      <div class="hpc-result-top">
+        <a class="hpc-size-badge" id="csg-badge" target="_top">Small</a>
+        <div class="hpc-fit-line">
+          <div class="hpc-eyebrow">Recommended surround size</div>
+          <span class="hpc-fit-pill good" id="csg-fit-pill">Good Fit</span>
+        </div>
+      </div>
+
+      <div class="hpc-note" id="csg-note"></div>
+
+      <div class="hpc-cta-hint" id="csg-cta-hint">
+        <a class="hpc-order-btn" id="csg-order-link" href="#" target="_top">Browse Chimney Surrounds</a>
+      </div>
+    </div>
+
+    <div class="hpc-footer-note">
+      Standard sizes: Small 800L x 800W x 750H | Large 1600L x 800W x 750H (external dimensions). Every surround is made to your exact chimney dimensions once ordered &mdash; this guide gives you a starting point.
     </div>
   </div>
 </div>
@@ -471,6 +547,79 @@ resetBtn.addEventListener('click', () => {
   populateModels('');
   findBtn.disabled = true;
   resultEl.classList.remove('show');
+});
+const CHIMNEY_SMALL = {l:800, w:800, h:750};
+const CHIMNEY_LARGE = {l:1600, w:800, h:750};
+const CHIMNEY_BROWSE_URL = 'https://www.pacificheatpumpcovers.com/category/all-products';
+const CHIMNEY_QUOTE_URL = 'https://www.pacificheatpumpcovers.com/blank';
+
+const csgLength = document.getElementById('csg-length');
+const csgWidth = document.getElementById('csg-width');
+const csgHeight = document.getElementById('csg-height');
+const csgFindBtn = document.getElementById('csg-find');
+const csgResetBtn = document.getElementById('csg-reset');
+const csgResultEl = document.getElementById('csg-result');
+
+function csgCheck(){
+  const l = Number(csgLength.value);
+  const w = Number(csgWidth.value);
+  const h = Number(csgHeight.value);
+  if(!l || !w || !h){ return; }
+
+  const badge = document.getElementById('csg-badge');
+  const pill = document.getElementById('csg-fit-pill');
+  const note = document.getElementById('csg-note');
+  const orderLink = document.getElementById('csg-order-link');
+
+  let size, fitClass, fitText, noteText, ctaText, ctaUrl;
+
+  if(l <= CHIMNEY_SMALL.l && w <= CHIMNEY_SMALL.w && h <= CHIMNEY_SMALL.h){
+    size = 'Small';
+    fitClass = 'good';
+    fitText = 'Good Fit';
+    noteText = "Great news — a Small Chimney Surround will fit your chimney (up to 800L x 800W x 750H). Browse our styles below to choose your favourite look.";
+    ctaText = 'Browse Chimney Surrounds';
+    ctaUrl = CHIMNEY_BROWSE_URL;
+  } else if(l <= CHIMNEY_LARGE.l && w <= CHIMNEY_LARGE.w && h <= CHIMNEY_LARGE.h){
+    size = 'Large';
+    fitClass = 'good';
+    fitText = 'Good Fit';
+    noteText = "Great news — a Large Chimney Surround will fit your chimney (up to 1600L x 800W x 750H). Browse our styles below to choose your favourite look.";
+    ctaText = 'Browse Chimney Surrounds';
+    ctaUrl = CHIMNEY_BROWSE_URL;
+  } else {
+    size = 'Custom';
+    fitClass = 'custom';
+    fitText = 'Custom size required';
+    noteText = "Your chimney is larger than our standard Large size. No problem — we build custom surrounds all the time. Get in touch with your dimensions and we'll quote a custom fit.";
+    ctaText = 'Get a Custom Quote';
+    ctaUrl = CHIMNEY_QUOTE_URL;
+  }
+
+  badge.textContent = size;
+  badge.classList.toggle('custom', size === 'Custom');
+  badge.href = ctaUrl;
+  pill.className = 'hpc-fit-pill ' + fitClass;
+  pill.textContent = fitText;
+  note.className = size === 'Custom' ? 'hpc-note custom-note' : 'hpc-note';
+  note.textContent = noteText;
+  orderLink.textContent = ctaText;
+  orderLink.href = ctaUrl;
+
+  csgResultEl.classList.add('show');
+  csgResultEl.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+csgFindBtn.addEventListener('click', csgCheck);
+[csgLength, csgWidth, csgHeight].forEach(el => {
+  el.addEventListener('keydown', e => { if(e.key === 'Enter') csgCheck(); });
+});
+
+csgResetBtn.addEventListener('click', () => {
+  csgLength.value = '';
+  csgWidth.value = '';
+  csgHeight.value = '';
+  csgResultEl.classList.remove('show');
 });
 </script>
 

@@ -9,22 +9,21 @@
   :root{
     --cream:#FBF3E9;
     --cream-2:#F6E9D8;
-    --coral:#D8592F;
-    --coral-dark:#B7431F;
-    --teal:#0F6E56;
-    --teal-dark:#084237;
-    --ink:#22201C;
-    --ink-soft:#5B564C;
+    --coral:#F2726D;
+    --coral-dark:#C15B57;
+    --teal:#0DBBBD;
+    --teal-dark:#144F50;
+    --ink:#17191B;
+    --ink-soft:#5A5F61;
   }
   *{box-sizing:border-box;}
   body{margin:0;font-family:'Inter',sans-serif;color:var(--ink);background:var(--cream);}
   h1,h2,h3{font-family:'Poppins',sans-serif;margin:0;}
   a{text-decoration:none;color:inherit;}
   .wrap{max-width:1180px;margin:0 auto;padding:0 40px;}
-  header{background:var(--cream);padding:22px 0;border-bottom:1px solid rgba(0,0,0,0.06);}
+  header{background:var(--cream);padding:20px 0;border-bottom:1px solid rgba(0,0,0,0.06);}
   .headerbar{display:flex;align-items:center;justify-content:space-between;}
-  .logo{font-family:'Poppins',sans-serif;font-weight:800;font-size:24px;letter-spacing:-0.5px;color:var(--teal-dark);}
-  .logo span{color:var(--coral);}
+  .logo img{height:38px;display:block;}
   nav{display:flex;gap:34px;font-weight:600;font-size:15px;}
   .navicons{display:flex;align-items:center;gap:18px;}
   .pill-btn{background:var(--coral);color:#fff;padding:10px 22px;border-radius:999px;font-weight:700;font-size:14px;}
@@ -48,7 +47,7 @@
   .card h3{font-size:19px;margin-bottom:6px;}
   .card .desc{color:var(--ink-soft);font-size:14px;line-height:1.5;margin-bottom:16px;}
   .card .row{display:flex;align-items:center;justify-content:space-between;}
-  .card .price{font-weight:800;font-size:19px;color:var(--coral);}
+  .card .price{font-weight:800;font-size:19px;color:var(--coral-dark);}
   .card .buy{background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-weight:700;font-size:13px;}
   .card.wide{grid-column:span 3;display:grid;grid-template-columns:1fr 1fr;}
   .card.wide .imgwrap{height:auto;}
@@ -56,17 +55,18 @@
   .card.wide h3{font-size:26px;}
   .card.wide .desc{font-size:15px;}
 
-  footer{background:var(--teal-dark);color:#EAF3EE;padding:50px 0;font-size:14px;}
-  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+  footer{background:var(--teal-dark);color:#DDEFEF;padding:50px 0;font-size:14px;}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+  footer .flogo img{height:30px;display:block;margin-bottom:10px;}
 </style>
 </head>
 <body>
 
 <header>
   <div class="wrap headerbar">
-    <div class="logo">Pacific <span>Outdoor</span></div>
+    <div class="logo"><img src="pos-logo-colour.png" alt="Pacific Outdoor Solutions"></div>
     <nav>
-      <a>Home</a><a style="color:var(--coral);">Our Range</a><a>Find Your Size</a><a>Installation</a><a>About</a>
+      <a>Home</a><a style="color:var(--coral-dark);">Our Range</a><a>Find Your Size</a><a>Installation</a><a>About</a>
     </nav>
     <div class="navicons">
       <div class="icon-circle">&#128100;</div>
@@ -155,10 +155,8 @@
 
 <footer>
   <div class="wrap">
-    <div><b>Pacific Outdoor Solutions</b><br>Napier, Hawke's Bay &middot; NZ-wide shipping</div>
-    <div>Home &middot; Our Range &middot; Find Your Size &middot; Installation &middot; Contact</div>
-  </div>
-</footer>
-
-</body>
-</html>
+    <div class="flogo">
+      <img src="pos-logo-white.png" alt="Pacific Outdoor Solutions">
+      Napier, Hawke's Bay &middot; NZ-wide shipping
+    </div>
+    <div>Home &middot; Our Range &middot; Find Your Size &mid

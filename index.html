@@ -316,10 +316,35 @@ font-size:16px;
   .hpc-wrap-second{
     margin-top:36px;
   }
+  .hpc-columns{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+    align-items:start;
+    max-width:1400px;
+    margin:0 auto;
+  }
+  .hpc-columns .hpc-wrap{
+    max-width:none;
+    margin:0;
+  }
+  .hpc-columns .hpc-wrap-second{
+    margin-top:0;
+  }
+  @media (max-width:900px){
+    .hpc-columns{
+      grid-template-columns:1fr;
+      gap:0;
+    }
+    .hpc-columns .hpc-wrap-second{
+      margin-top:36px;
+    }
+  }
 </style>
 </head>
 <body>
 
+<div class="hpc-columns">
 <div class="hpc-wrap">
   <div class="hpc-header">
     <h2>Find Your Recommended Cover Size</h2>
@@ -425,6 +450,7 @@ font-size:16px;
       Standard sizes: Small 800L x 800W x 750H | Large 1600L x 800W x 750H (external dimensions). Every surround is made to your exact chimney dimensions once ordered &mdash; this guide gives you a starting point.
     </div>
   </div>
+</div>
 </div>
 
 <script>

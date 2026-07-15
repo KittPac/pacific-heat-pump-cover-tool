@@ -318,7 +318,7 @@ font-size:16px;
   }
   .hpc-columns{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
     gap:28px;
     align-items:start;
     max-width:1400px;
@@ -330,15 +330,6 @@ font-size:16px;
   }
   .hpc-columns .hpc-wrap-second{
     margin-top:0;
-  }
-  @media (max-width:900px){
-    .hpc-columns{
-      grid-template-columns:1fr;
-      gap:0;
-    }
-    .hpc-columns .hpc-wrap-second{
-      margin-top:36px;
-    }
   }
 </style>
 </head>

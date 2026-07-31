@@ -1,479 +1,228 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Heat Pump Cover Size Finder</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@600;700;800&family=Wix+Madefor+Text:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --dark:#1A2421;
-    --mid:#4A5652;
-    --sage:#D1D9D6;
-    --offwhite:#F4F7F6;
-    --white:#FFFFFF;
-    --teal:#2DC0C0;
-    --teal-dark:#219090;
-    --tight:#C97A2B;
-    --good:#2DC0C0;
-    --custom:#C0522D;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    padding:0;
-    background:transparent;
-    font-family:'Wix Madefor Text', sans-serif;
-    color:var(--dark);
-  }
-  .hpc-wrap{
-    max-width:900px;
-    margin:0 auto;
-    padding:32px 20px 48px;
-    background:var(--offwhite);
-    border-radius:16px;
-  }
-  .hpc-header{
-    text-align:center;
-    margin-bottom:28px;
-  }
-  .hpc-header h2{
-    font-family:'Wix Madefor Display', sans-serif;
-    font-weight:800;
-    font-size:clamp(24px,4vw,34px);
-    margin:0 0 8px;
-    color:var(--dark);
-  }
-  .hpc-header p{
-    font-size:15px;
-    color:var(--mid);
-    max-width:520px;
-    margin:0 auto;
-    line-height:1.5;
-  }
-  .hpc-card{
-    background:var(--white);
-    border:1px solid var(--sage);
-    border-radius:14px;
-    padding:28px;
-    box-shadow:0 2px 10px rgba(26,36,33,0.05);
-  }
-  .hpc-row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:16px;
-    margin-bottom:20px;
-  }
-  @media (max-width:560px){
-    .hpc-row{grid-template-columns:1fr;}
-  }
-  .hpc-field label{
-    display:block;
-    font-size:13px;
-    font-weight:600;
-    color:var(--dark);
-    margin-bottom:6px;
-    letter-spacing:.02em;
-    text-transform:uppercase;
-  }
-  .hpc-field select{
-    width:100%;
-    padding:12px 14px;
-    font-size:15px;
-    font-family:'Wix Madefor Text', sans-serif;
-    border:1.5px solid var(--sage);
-    border-radius:9px;
-    background:var(--white) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'><path d='M5 7l5 5 5-5' stroke='%234A5652' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat right 12px center;
-    background-size:16px;
-    appearance:none;
-    -webkit-appearance:none;
-    color:var(--dark);
-    cursor:pointer;
-    transition:border-color .15s ease;
-  }
-  .hpc-field select:focus{
-    outline:none;
-    border-color:var(--teal);
-  }
-  .hpc-field select:disabled{
-    color:#9aa5a1;
-    cursor:not-allowed;
-    background-color:#f6f8f7;
-  }
-  .hpc-actions{
-    display:flex;
-    gap:12px;
-    margin-top:6px;
-    flex-wrap:wrap;
-  }
-  .hpc-btn{
-    font-family:'Wix Madefor Text', sans-serif;
-    font-weight:600;
-    font-size:15px;
-    padding:13px 26px;
-    border-radius:999px;
-    border:none;
-    cursor:pointer;
-    transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease;
-  }
-  .hpc-btn:disabled{
-    opacity:.5;
-    cursor:not-allowed;
-  }
-  .hpc-btn-primary{
-    background:var(--dark);
-    color:var(--white);
-    flex:1;
-  }
-  .hpc-btn-primary:hover:not(:disabled){
-    transform:translateY(-1px);
-    box-shadow:0 6px 14px rgba(26,36,33,0.25);
-  }
-  .hpc-btn-secondary{
-    background:transparent;
-    color:var(--mid);
-    border:1.5px solid var(--sage);
-  }
-  .hpc-btn-secondary:hover{
-    border-color:var(--mid);
-    color:var(--dark);
-  }
-  .hpc-result{
-    margin-top:26px;
-    border-top:1px solid var(--sage);
-    padding-top:26px;
-    display:none;
-  }
-  .hpc-result.show{
-    display:block;
-    animation:hpcFade .35s ease;
-  }
-  @keyframes hpcFade{
-    from{opacity:0; transform:translateY(6px);}
-    to{opacity:1; transform:translateY(0);}
-  }
-  .hpc-result-top{
-    display:flex;
-    align-items:center;
-    gap:18px;
-    flex-wrap:wrap;
-    margin-bottom:18px;
-  }
-  .hpc-size-badge{
-    font-family:'Wix Madefor Display', sans-serif;
-    font-weight:800;
-    font-size:30px;
-    color:var(--white);
-    background:var(--dark);
-    padding:14px 26px;
-    border-radius:12px;
-    line-height:1;
-    white-space:nowrap;
-display:inline-block;
-text-decoration:none;
-  }
-  .hpc-size-badge.custom{
-    background:var(--custom);
-}
-.hpc-size-badge[href]{
-cursor:pointer;
-transition:transform .12s ease, box-shadow .12s ease;
-}
-.hpc-size-badge[href]:hover{
-transform:translateY(-2px);
-box-shadow:0 6px 16px rgba(26,36,33,0.3);
-  }
-  .hpc-fit-line{
-    flex:1;
-    min-width:200px;
-  }
-  .hpc-fit-line .hpc-eyebrow{
-    font-size:12px;
-    text-transform:uppercase;
-    letter-spacing:.06em;
-    color:var(--mid);
-    font-weight:600;
-    margin-bottom:4px;
-  }
-  .hpc-fit-pill{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    font-size:14px;
-    font-weight:600;
-    padding:4px 12px;
-    border-radius:999px;
-  }
-  .hpc-fit-pill.good{ background:rgba(45,192,192,.15); color:var(--teal-dark); }
-  .hpc-fit-pill.tight{ background:rgba(201,122,43,.15); color:var(--tight); }
-  .hpc-fit-pill.custom{ background:rgba(192,82,45,.15); color:var(--custom); }
-  .hpc-fit-pill::before{
-    content:'';
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:currentColor;
-  }
-  .hpc-details{
-    background:var(--offwhite);
-    border-radius:10px;
-    padding:16px 18px;
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:10px 20px;
-    font-size:14px;
-  }
-  @media (max-width:560px){
-    .hpc-details{grid-template-columns:1fr;}
-  }
-  .hpc-details div span.k{
-    color:var(--mid);
-    display:block;
-    font-size:12px;
-    text-transform:uppercase;
-    letter-spacing:.04em;
-    margin-bottom:2px;
-  }
-  .hpc-details div span.v{
-    color:var(--dark);
-    font-weight:600;
-  }
-  .hpc-note{
-    margin-top:16px;
-    font-size:13.5px;
-    color:var(--mid);
-    line-height:1.5;
-    background:rgba(45,192,192,.08);
-    border-left:3px solid var(--teal);
-    padding:12px 14px;
-    border-radius:0 8px 8px 0;
-  }
-  .hpc-note.custom-note{
-    background:rgba(192,82,45,.08);
-    border-left-color:var(--custom);
-  }
-  .hpc-cta-hint{
-    margin-top:18px;
-    font-size:14px;
-    color:var(--dark);
-    font-weight:600;
-  }
-  .hpc-order-btn{
-display:inline-flex;
-align-items:center;
-gap:8px;
-background:var(--teal);
-color:var(--white);
-font-family:'Wix Madefor Text', sans-serif;
-font-weight:700;
-font-size:15px;
-padding:13px 28px;
-border-radius:999px;
-text-decoration:none;
-transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
-}
-.hpc-order-btn:hover{
-background:var(--teal-dark);
-transform:translateY(-1px);
-box-shadow:0 6px 14px rgba(45,192,192,0.3);
-}
-.hpc-order-btn::after{
-content:'→';
-font-size:16px;
-}
-.hpc-footer-note{
-    text-align:center;
-    font-size:12px;
-    color:var(--mid);
-    margin-top:18px;
-  }
-</style>
-</head>
-<body>
+*{box-sizing:border-box}
+body{margin:0;font-family:'Segoe UI',Helvetica,Arial,sans-serif;color:#14303d;background:#f4f6f7}
+.wrap{max-width:940px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:26px;margin:0 0 4px;color:#0e3a4c}
+.sub{color:#5c7480;margin:0 0 26px;font-size:15px}
+.card{background:#fff;border:1px solid #dfe6e9;border-radius:10px;padding:22px;margin-bottom:18px}
+.tabs{display:flex;gap:8px;margin-bottom:18px}
+.tab{flex:1;padding:11px;text-align:center;border:1px solid #dfe6e9;background:#fff;border-radius:8px;
+     cursor:pointer;font-size:14px;font-weight:600;color:#5c7480}
+.tab.on{background:#0e3a4c;color:#fff;border-color:#0e3a4c}
+label{display:block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+      color:#5c7480;margin:0 0 6px}
+select,input{width:100%;padding:11px;border:1px solid #cbd6da;border-radius:7px;font-size:15px;
+             background:#fff;color:#14303d;font-family:inherit}
+select:disabled{background:#f0f3f4;color:#9bacb4}
+.row{display:flex;gap:14px;flex-wrap:wrap}
+.row>div{flex:1;min-width:170px;margin-bottom:14px}
+.result{display:none}
+.result.on{display:block}
+.verdict{border-radius:10px;padding:20px;margin-bottom:18px}
+.v-ok{background:#e8f5ee;border:1px solid #2e9e63}
+.v-tight{background:#fff6e5;border:1px solid #d99a1e}
+.v-no{background:#fdecec;border:1px solid #c94a4a}
+.v-label{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5c7480}
+.v-size{font-size:32px;font-weight:700;margin:4px 0 2px;color:#0e3a4c}
+.v-note{font-size:14px;color:#3d5762}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
+th,td{padding:10px 8px;text-align:left;border-bottom:1px solid #eceff1}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#5c7480}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700}
+.p-y{background:#e8f5ee;color:#1d7a49}
+.p-n{background:#fdecec;color:#b03636}
+.p-t{background:#fff6e5;color:#9a6a08}
+.meta{font-size:13px;color:#5c7480;line-height:1.65}
+.meta b{color:#14303d}
+h3{font-size:15px;margin:22px 0 4px;color:#0e3a4c}
+.ctas{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 22px;border-radius:7px;font-size:15px;font-weight:700;
+     text-decoration:none;border:1px solid transparent}
+.btn-buy{background:#0e3a4c;color:#fff}
+.btn-buy:hover{background:#155066}
+.btn-quote{background:#c05621;color:#fff}
+.btn-quote:hover{background:#9c4419}
+.btn-alt{background:#fff;color:#0e3a4c;border-color:#cbd6da}
+.btn-alt:hover{background:#f2f8fa}
+.warn{margin-top:12px;padding:11px 14px;background:#fff6e5;border:1px solid #e8c98a;
+      border-radius:7px;font-size:13px;color:#8a5f10}
+.foot{font-size:12px;color:#8ba0a9;line-height:1.6;margin-top:26px}
+</style></head><body><div class="wrap">
+<h1>Heat Pump Cover Compatibility Tool</h1>
+<p class="sub">Find which Classic cover fits your heat pump. Allows 30&nbsp;mm clearance on the top and both sides, and 20&nbsp;mm at the front.</p>
 
-<div class="hpc-wrap">
-  <div class="hpc-header">
-    <h2>Find Your Recommended Cover Size</h2>
-    <p>Select your heat pump's brand and model below and we'll tell you exactly which Classic Cover size fits &mdash; Extra Small, Small, Medium or Large.</p>
-  </div>
+<div class="tabs">
+  <div class="tab on" id="tabA" onclick="mode('pick')">Choose my heat pump</div>
+  <div class="tab" id="tabB" onclick="mode('dims')">Enter dimensions</div>
+</div>
 
-  <div class="hpc-card">
-    <div class="hpc-row">
-      <div class="hpc-field">
-        <label for="hpc-brand">Brand</label>
-        <select id="hpc-brand">
-          <option value="">Choose a brand</option>
-        </select>
-      </div>
-      <div class="hpc-field">
-        <label for="hpc-model">Model</label>
-        <select id="hpc-model" disabled>
-          <option value="">Choose a brand first</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="hpc-actions">
-      <button class="hpc-btn hpc-btn-primary" id="hpc-find" disabled>Show My Recommendation</button>
-      <button class="hpc-btn hpc-btn-secondary" id="hpc-reset">Reset</button>
-    </div>
-
-    <div class="hpc-result" id="hpc-result">
-      <div class="hpc-result-top">
-        <a class="hpc-size-badge" id="hpc-badge" target="_top">Medium</a>
-        <div class="hpc-fit-line">
-          <div class="hpc-eyebrow">Recommended cover</div>
-          <span class="hpc-fit-pill good" id="hpc-fit-pill">Good Fit</span>
-        </div>
-      </div>
-
-      <div class="hpc-details" id="hpc-details">
-        <div><span class="k">Brand &amp; Series</span><span class="v" id="hpc-d-brand">&mdash;</span></div>
-        <div><span class="k">Indoor / Outdoor Model</span><span class="v" id="hpc-d-model">&mdash;</span></div>
-        <div><span class="k">Capacity</span><span class="v" id="hpc-d-kw">&mdash;</span></div>
-        <div><span class="k">Outdoor Unit Dimensions (W x H x D)</span><span class="v" id="hpc-d-dims">&mdash;</span></div>
-      </div>
-
-      <div class="hpc-note" id="hpc-note">
-        This is based on our standard clearance rules (50mm each side, 20mm above, 50mm behind) applied to the outdoor unit's published dimensions.
-      </div>
-
-      <div class="hpc-cta-hint" id="hpc-cta-hint">
-        <a class="hpc-order-btn" id="hpc-order-link" href="#" target="_top">Order My <span id="hpc-cta-size">Medium</span> Cover</a>
-      </div>
-    </div>
-
-    <div class="hpc-footer-note">
-      Sizing based on Pacific Heat Pump Covers' Classic cover dimensions and published NZ heat pump brand data. Always confirm exact unit dimensions before ordering if your model isn't listed, or get in touch and we'll help.
-    </div>
+<div class="card" id="pickCard">
+  <div class="row">
+    <div><label for="brand">Brand</label><select id="brand"></select></div>
+    <div><label for="model">Model</label><select id="model" disabled></select></div>
   </div>
 </div>
 
+<div class="card" id="dimsCard" style="display:none">
+  <div class="row">
+    <div><label for="iw">Unit width (mm)</label><input id="iw" type="number" min="1" placeholder="e.g. 800"></div>
+    <div><label for="ih">Unit height (mm)</label><input id="ih" type="number" min="1" placeholder="e.g. 550"></div>
+    <div><label for="idp">Unit depth (mm)</label><input id="idp" type="number" min="1" placeholder="e.g. 285"></div>
+  </div>
+  <p class="meta">Measure the <b>outdoor</b> unit only, excluding pipework and wall brackets.</p>
+</div>
+
+<div class="result" id="res"></div>
+
+<p class="foot">Dimensions taken from current manufacturer spec sheets. Always confirm against your own
+unit before ordering &mdash; manufacturers revise chassis sizes between model years.
+Custom sizes are available on request.</p>
+</div>
+
 <script>
-const HPC_DATA = [{"brand": "Mitsubishi", "series": "GS", "model": "GS25", "outdoor": "MUZ-GS25", "kw": 2.5, "w": 800, "h": 550, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Mitsubishi", "series": "GS", "model": "GS35", "outdoor": "MUZ-GS35", "kw": 3.5, "w": 800, "h": 550, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Mitsubishi", "series": "GS", "model": "GS42", "outdoor": "MUZ-GS42", "kw": 4.2, "w": 800, "h": 550, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Mitsubishi", "series": "GS", "model": "GS50", "outdoor": "MUZ-GS50VFD", "kw": 5, "w": 800, "h": 714, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Mitsubishi", "series": "GS", "model": "GS60", "outdoor": "MUZ-GS60VFD", "kw": 6, "w": 800, "h": 714, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Mitsubishi", "series": "GS", "model": "GS71", "outdoor": "MUZ-GS71VFD", "kw": 7.1, "w": 800, "h": 714, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Mitsubishi", "series": "GS", "model": "GS80", "outdoor": "MUZ-GS80VFD", "kw": 8, "w": 840, "h": 880, "d": 330, "recommended": "Large", "fit": "Good Fit"}, {"brand": "Mitsubishi", "series": "AP", "model": "AP25", "outdoor": "MUZ-AP25VGD", "kw": 2.5, "w": 800, "h": 550, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Mitsubishi", "series": "AP", "model": "AP35", "outdoor": "MUZ-AP35VGD", "kw": 3.5, "w": 800, "h": 550, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Mitsubishi", "series": "AP", "model": "AP42", "outdoor": "MUZ-AP42VGD", "kw": 4.2, "w": 800, "h": 550, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Mitsubishi", "series": "AP", "model": "AP50", "outdoor": "MUZ-AP50VGD", "kw": 5, "w": 800, "h": 714, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Mitsubishi", "series": "AP", "model": "AP60", "outdoor": "MUZ-AP60VGD", "kw": 6, "w": 800, "h": 714, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Mitsubishi", "series": "LN", "model": "LN25", "outdoor": "MUZ-LN25VGHZ", "kw": 2.5, "w": 800, "h": 550, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Mitsubishi", "series": "LN", "model": "LN35", "outdoor": "MUZ-LN35VGHZ", "kw": 3.5, "w": 800, "h": 550, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Mitsubishi", "series": "LN", "model": "LN50", "outdoor": "MUZ-LN50VG", "kw": 5, "w": 800, "h": 714, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Mitsubishi", "series": "EF", "model": "EF25", "outdoor": "MUZ-EF25VG", "kw": 2.5, "w": 800, "h": 550, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Mitsubishi", "series": "EF", "model": "EF35", "outdoor": "MUZ-EF35VG", "kw": 3.5, "w": 800, "h": 550, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Mitsubishi", "series": "GE", "model": "GE25", "outdoor": "MUZ-GE25VA", "kw": 2.5, "w": 800, "h": 550, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Mitsubishi", "series": "GE", "model": "GE35", "outdoor": "MUZ-GE35VA", "kw": 3.5, "w": 800, "h": 550, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Daikin", "series": "Cora", "model": "FTXM20", "outdoor": "RXM20", "kw": 2, "w": 675, "h": 550, "d": 284, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Daikin", "series": "Cora", "model": "FTXM25", "outdoor": "RXM25", "kw": 2.5, "w": 675, "h": 550, "d": 284, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Daikin", "series": "Cora", "model": "FTXM35", "outdoor": "RXM35", "kw": 3.5, "w": 675, "h": 550, "d": 284, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Daikin", "series": "Cora", "model": "FTXM46", "outdoor": "RXM46", "kw": 4.6, "w": 675, "h": 550, "d": 284, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Daikin", "series": "Cora", "model": "FTXM50", "outdoor": "RXM50", "kw": 5, "w": 930, "h": 695, "d": 350, "recommended": "Medium", "fit": "Tight Fit"}, {"brand": "Daikin", "series": "Cora", "model": "FTXM60", "outdoor": "RXM60", "kw": 6, "w": 930, "h": 695, "d": 350, "recommended": "Medium", "fit": "Tight Fit"}, {"brand": "Daikin", "series": "Lite", "model": "FTXF20", "outdoor": "RXF20", "kw": 2, "w": 770, "h": 550, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Daikin", "series": "Lite", "model": "FTXF25", "outdoor": "RXF25", "kw": 2.5, "w": 658, "h": 550, "d": 275, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Daikin", "series": "Lite", "model": "FTXF35", "outdoor": "RXF35", "kw": 3.5, "w": 658, "h": 550, "d": 275, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Daikin", "series": "Lite", "model": "FTXF50", "outdoor": "RXF50", "kw": 5, "w": 658, "h": 550, "d": 275, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Daikin", "series": "Zena", "model": "FTXJ25", "outdoor": "RXJ25", "kw": 2.5, "w": 780, "h": 550, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Daikin", "series": "Zena", "model": "FTXJ35", "outdoor": "RXJ35", "kw": 3.5, "w": 780, "h": 550, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Daikin", "series": "Alira", "model": "FTXM25A", "outdoor": "RXM25A", "kw": 2.5, "w": 765, "h": 550, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Daikin", "series": "Alira", "model": "FTXM35A", "outdoor": "RXM35A", "kw": 3.5, "w": 765, "h": 550, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Fujitsu", "series": "Lifestyle", "model": "ASTG09", "outdoor": "AOTG09LVCC", "kw": 2.5, "w": 765, "h": 541, "d": 275, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Fujitsu", "series": "Lifestyle", "model": "ASTG12", "outdoor": "AOTG12LVCC", "kw": 3.5, "w": 765, "h": 541, "d": 275, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Fujitsu", "series": "Lifestyle", "model": "ASTG14", "outdoor": "AOTG14LVCC", "kw": 4, "w": 765, "h": 541, "d": 275, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Fujitsu", "series": "Lifestyle", "model": "ASTG18", "outdoor": "AOTG18LVCC", "kw": 5, "w": 800, "h": 641, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Fujitsu", "series": "Lifestyle", "model": "ASTG22", "outdoor": "AOTG22LVCC", "kw": 6, "w": 800, "h": 641, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Fujitsu", "series": "Comfort", "model": "ASTH09", "outdoor": "AOTH09", "kw": 2.5, "w": 765, "h": 541, "d": 275, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Fujitsu", "series": "Comfort", "model": "ASTH12", "outdoor": "AOTH12", "kw": 3.5, "w": 765, "h": 541, "d": 275, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Fujitsu", "series": "Comfort", "model": "ASTH18", "outdoor": "AOTH18", "kw": 5, "w": 800, "h": 641, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "Z Series", "model": "CS-Z20", "outdoor": "CU-Z20", "kw": 2, "w": 780, "h": 542, "d": 289, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "Z Series", "model": "CS-Z25", "outdoor": "CU-Z25", "kw": 2.5, "w": 780, "h": 542, "d": 289, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "Z Series", "model": "CS-Z35", "outdoor": "CU-Z35", "kw": 3.5, "w": 780, "h": 542, "d": 289, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "Z Series", "model": "CS-Z42", "outdoor": "CU-Z42", "kw": 4.2, "w": 780, "h": 542, "d": 289, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "Z Series", "model": "CS-Z50", "outdoor": "CU-Z50", "kw": 5, "w": 824, "h": 619, "d": 299, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "U Series", "model": "CS-U25", "outdoor": "CU-U25", "kw": 2.5, "w": 780, "h": 542, "d": 289, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "U Series", "model": "CS-U35", "outdoor": "CU-U35", "kw": 3.5, "w": 780, "h": 542, "d": 289, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "U Series", "model": "CS-U50", "outdoor": "CU-U50", "kw": 5, "w": 875, "h": 695, "d": 320, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "Aero", "model": "CS-RZ25", "outdoor": "CU-RZ25", "kw": 2.5, "w": 780, "h": 542, "d": 289, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Panasonic", "series": "Aero", "model": "CS-RZ35", "outdoor": "CU-RZ35", "kw": 3.5, "w": 780, "h": 542, "d": 289, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Haier", "series": "Tundra", "model": "AS26T", "outdoor": "1U26T", "kw": 2.6, "w": 800, "h": 553, "d": 280, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Haier", "series": "Tundra", "model": "AS35T", "outdoor": "1U35T", "kw": 3.5, "w": 800, "h": 553, "d": 280, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Haier", "series": "Tundra", "model": "AS50T", "outdoor": "1U50T", "kw": 5, "w": 890, "h": 700, "d": 340, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Haier", "series": "Flexis", "model": "AS25F", "outdoor": "1U25F", "kw": 2.5, "w": 800, "h": 553, "d": 280, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Haier", "series": "Flexis", "model": "AS35F", "outdoor": "1U35F", "kw": 3.5, "w": 800, "h": 553, "d": 280, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Haier", "series": "Flexis", "model": "AS50F", "outdoor": "1U50F", "kw": 5, "w": 890, "h": 700, "d": 340, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Gree", "series": "Lomo", "model": "GWH09", "outdoor": "GWH09", "kw": 2.6, "w": 782, "h": 540, "d": 320, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Gree", "series": "Lomo", "model": "GWH12", "outdoor": "GWH12", "kw": 3.5, "w": 848, "h": 596, "d": 320, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Gree", "series": "Lomo", "model": "GWH18", "outdoor": "GWH18", "kw": 5.2, "w": 965, "h": 700, "d": 396, "recommended": "Too Large", "fit": "Custom size required"}, {"brand": "Gree", "series": "Amber", "model": "GWH09B", "outdoor": "GWH09B", "kw": 2.6, "w": 780, "h": 540, "d": 300, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Gree", "series": "Amber", "model": "GWH12B", "outdoor": "GWH12B", "kw": 3.5, "w": 780, "h": 540, "d": 300, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Gree", "series": "Amber", "model": "GWH18B", "outdoor": "GWH18B", "kw": 5.2, "w": 848, "h": 596, "d": 320, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Toshiba", "series": "Hi-Wall", "model": "RAS-10", "outdoor": "RAS-10", "kw": 2.5, "w": 780, "h": 550, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Toshiba", "series": "Hi-Wall", "model": "RAS-13", "outdoor": "RAS-13", "kw": 3.5, "w": 780, "h": 550, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Toshiba", "series": "Hi-Wall", "model": "RAS-18", "outdoor": "RAS-18", "kw": 5, "w": 800, "h": 630, "d": 300, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Toshiba", "series": "Hi-Wall", "model": "RAS-22", "outdoor": "RAS-22", "kw": 6, "w": 800, "h": 630, "d": 300, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Hitachi", "series": "Takai", "model": "RAS25", "outdoor": "RAC25", "kw": 2.5, "w": 780, "h": 570, "d": 280, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Hitachi", "series": "Takai", "model": "RAS35", "outdoor": "RAC35", "kw": 3.5, "w": 780, "h": 570, "d": 280, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Hitachi", "series": "Takai", "model": "RAS50", "outdoor": "RAC50", "kw": 5, "w": 800, "h": 650, "d": 300, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Samsung", "series": "AR Series", "model": "AR09", "outdoor": "AR09", "kw": 2.5, "w": 790, "h": 548, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Samsung", "series": "AR Series", "model": "AR12", "outdoor": "AR12", "kw": 3.5, "w": 790, "h": 548, "d": 285, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "Samsung", "series": "AR Series", "model": "AR18", "outdoor": "AR18", "kw": 5, "w": 880, "h": 638, "d": 310, "recommended": "Small", "fit": "Good Fit"}, {"brand": "Midea", "series": "Mission", "model": "MSAG-09", "outdoor": "MOX130-09", "kw": 2.6, "w": 805, "h": 554, "d": 330, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Midea", "series": "Mission", "model": "MSAG-12", "outdoor": "MOX230-12", "kw": 3.5, "w": 805, "h": 554, "d": 330, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "Midea", "series": "Mission", "model": "MSAG-18", "outdoor": "MOX330-18", "kw": 5.2, "w": 805, "h": 554, "d": 330, "recommended": "Medium", "fit": "Good Fit"}, {"brand": "MHI", "series": "Ciara", "model": "SRK20ZSA", "outdoor": "SRC20ZSA-W", "kw": 2, "w": 645, "h": 540, "d": 275, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "MHI", "series": "Ciara", "model": "SRK25ZSA", "outdoor": "SRC25ZSA-W", "kw": 2.5, "w": 645, "h": 540, "d": 275, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "MHI", "series": "Ciara", "model": "SRK35ZSA", "outdoor": "SRC35ZSA-W", "kw": 3.5, "w": 645, "h": 540, "d": 275, "recommended": "Small", "fit": "Tight Fit"}, {"brand": "MHI", "series": "Ciara", "model": "SRK50ZSA", "outdoor": "SRC50ZSA-W", "kw": 5, "w": 780, "h": 595, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "MHI", "series": "Ciara", "model": "SRK60ZSA", "outdoor": "SRC60ZSA-W", "kw": 6, "w": 800, "h": 640, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "MHI", "series": "Ciara", "model": "SRK71ZSA", "outdoor": "SRC71ZSA-W", "kw": 7.1, "w": 800, "h": 640, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti", "model": "SRK25ZMA", "outdoor": "SRC25ZMA-W", "kw": 2.5, "w": 780, "h": 540, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti", "model": "SRK35ZMA", "outdoor": "SRC35ZMA-W", "kw": 3.5, "w": 780, "h": 540, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti", "model": "SRK50ZMA", "outdoor": "SRC50ZMA-W", "kw": 5, "w": 780, "h": 540, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti", "model": "SRK60ZMA", "outdoor": "SRC60ZMA-W", "kw": 6, "w": 780, "h": 540, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti", "model": "SRK71ZMA", "outdoor": "SRC71ZMA-W", "kw": 7.1, "w": 780, "h": 540, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti", "model": "SRK80ZMA", "outdoor": "SRC80ZMA-W", "kw": 8, "w": 780, "h": 540, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti Plus", "model": "SRK25ZRA", "outdoor": "SRC25ZRA-W", "kw": 2.5, "w": 800, "h": 640, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti Plus", "model": "SRK35ZRA", "outdoor": "SRC35ZRA-W", "kw": 3.5, "w": 800, "h": 640, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti Plus", "model": "SRK50ZRA", "outdoor": "SRC50ZRA-W", "kw": 5, "w": 800, "h": 640, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti Plus", "model": "SRK60ZRA", "outdoor": "SRC60ZRA-W", "kw": 6, "w": 800, "h": 640, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti Plus", "model": "SRK71ZRA", "outdoor": "SRC71ZRA-W", "kw": 7.1, "w": 800, "h": 640, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "MHI", "series": "Avanti Plus", "model": "SRK80ZRA", "outdoor": "SRC80ZRA-W", "kw": 8, "w": 800, "h": 640, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "MHI", "series": "Bronte", "model": "SRK90ZSA-B", "outdoor": "SRC90ZSA-W", "kw": 9, "w": 800, "h": 640, "d": 290, "recommended": "Small", "fit": "Good Fit"}, {"brand": "MHI", "series": "Bronte", "model": "SRK125ZSA-B", "outdoor": "SRC125ZSA-W", "kw": 12.5, "w": 800, "h": 640, "d": 290, "recommended": "Small", "fit": "Good Fit"}];
-
-const SIZE_URLS = {
-'Extra Small': 'https://www.pacificheatpumpcovers.com/product-page/classic-heat-pump-cover',
-'Small': 'https://www.pacificheatpumpcovers.com/product-page/small-classic-heat-pump-cover',
-'Medium': 'https://www.pacificheatpumpcovers.com/product-page/medium-classic-heat-pump-cover',
-'Large': 'https://www.pacificheatpumpcovers.com/product-page/large-classic-heat-pump-cover'
+// ---- LIVE SITE LINKS (verified against pacificheatpumpcovers.com, 31/07/26) ----
+// This page is embedded in Wix via an iframe, so every link uses target="_top"
+// to navigate the parent window rather than inside the frame.
+const BASE = "https://www.pacificheatpumpcovers.com";
+const SITE = {
+  quote: BASE + "/blank",                                   // "Get a Quote" page
+  product: {
+    "Extra Small": BASE + "/product-page/classic-heat-pump-cover",
+    "Small":       BASE + "/product-page/small-classic-heat-pump-cover",
+    "Medium":      BASE + "/product-page/medium-classic-heat-pump-cover",
+    "Large":       BASE + "/product-page/large-classic-heat-pump-cover"
+  }
 };
+const DATA = {"covers":[{"size":"Extra Small","w":820,"h":800,"d":295,"price":499},{"size":"Small","w":950,"h":800,"d":380,"price":599},{"size":"Medium","w":890,"h":950,"d":370,"price":699},{"size":"Large","w":970,"h":1400,"d":370,"price":899}],"clearance":{"side_mm":30,"top_mm":30,"front_mm":20,"rear_mm":0,"tight_threshold_mm":20},"models":[{"brand":"Daikin","series":"Alira","indoor_model":"FTXM20YVMA","outdoor_model":"RXM20YVMA","kw":2.2,"unit_w":675,"unit_h":550,"unit_d":284,"req_w":735,"req_h":580,"req_d":304,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-9,"slack_s":76,"slack_m":66,"slack_l":66,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Alira spec sheet"},{"brand":"Daikin","series":"Alira","indoor_model":"FTXM25YVMA","outdoor_model":"RXM25YVMA","kw":2.5,"unit_w":675,"unit_h":550,"unit_d":284,"req_w":735,"req_h":580,"req_d":304,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-9,"slack_s":76,"slack_m":66,"slack_l":66,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Alira spec sheet"},{"brand":"Daikin","series":"Alira","indoor_model":"FTXM35YVMA","outdoor_model":"RXM35YVMA","kw":3.5,"unit_w":675,"unit_h":550,"unit_d":284,"req_w":735,"req_h":580,"req_d":304,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-9,"slack_s":76,"slack_m":66,"slack_l":66,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Alira spec sheet"},{"brand":"Daikin","series":"Alira","indoor_model":"FTXM46WVMA","outdoor_model":"RXM46WVMA","kw":4.6,"unit_w":930,"unit_h":695,"unit_d":350,"req_w":990,"req_h":725,"req_d":370,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-170,"slack_s":-40,"slack_m":-100,"slack_l":-20,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Alira spec sheet"},{"brand":"Daikin","series":"Alira","indoor_model":"FTXM50WVMA","outdoor_model":"RXM50WVMA","kw":5.0,"unit_w":930,"unit_h":695,"unit_d":350,"req_w":990,"req_h":725,"req_d":370,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-170,"slack_s":-40,"slack_m":-100,"slack_l":-20,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Alira spec sheet"},{"brand":"Daikin","series":"Alira","indoor_model":"FTXM60WVMA","outdoor_model":"RXM60WVMA","kw":6.0,"unit_w":930,"unit_h":695,"unit_d":350,"req_w":990,"req_h":725,"req_d":370,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-170,"slack_s":-40,"slack_m":-100,"slack_l":-20,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Alira spec sheet"},{"brand":"Daikin","series":"Alira","indoor_model":"FTXM71WVMA","outdoor_model":"RXM71WVMA","kw":7.1,"unit_w":930,"unit_h":695,"unit_d":350,"req_w":990,"req_h":725,"req_d":370,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-170,"slack_s":-40,"slack_m":-100,"slack_l":-20,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Alira spec sheet"},{"brand":"Daikin","series":"Alira","indoor_model":"FTXM85WVMA","outdoor_model":"RXM85WVMA","kw":8.5,"unit_w":940,"unit_h":990,"unit_d":320,"req_w":1000,"req_h":1020,"req_d":340,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-220,"slack_s":-220,"slack_m":-110,"slack_l":-30,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Alira spec sheet"},{"brand":"Daikin","series":"Alira","indoor_model":"FTXM95WVMA","outdoor_model":"RXM95WVMA","kw":9.5,"unit_w":940,"unit_h":990,"unit_d":320,"req_w":1000,"req_h":1020,"req_d":340,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-220,"slack_s":-220,"slack_m":-110,"slack_l":-30,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Alira spec sheet"},{"brand":"Daikin","series":"Cora","indoor_model":"FTXM20UVMZ","outdoor_model":"RXM20UVMZ","kw":2.0,"unit_w":675,"unit_h":550,"unit_d":284,"req_w":735,"req_h":580,"req_d":304,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-9,"slack_s":76,"slack_m":66,"slack_l":66,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Cora spec sheet RESCOR-20032024"},{"brand":"Daikin","series":"Cora","indoor_model":"FTXM25UVMZ","outdoor_model":"RXM25UVMZ","kw":2.5,"unit_w":675,"unit_h":550,"unit_d":284,"req_w":735,"req_h":580,"req_d":304,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-9,"slack_s":76,"slack_m":66,"slack_l":66,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Cora spec sheet RESCOR-20032024"},{"brand":"Daikin","series":"Cora","indoor_model":"FTXM35UVMZ","outdoor_model":"RXM35UVMZ","kw":3.5,"unit_w":675,"unit_h":550,"unit_d":284,"req_w":735,"req_h":580,"req_d":304,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-9,"slack_s":76,"slack_m":66,"slack_l":66,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Cora spec sheet RESCOR-20032024"},{"brand":"Daikin","series":"Cora","indoor_model":"FTXM46UVMZ","outdoor_model":"RXM46UVMZ","kw":4.6,"unit_w":930,"unit_h":695,"unit_d":350,"req_w":990,"req_h":725,"req_d":370,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-170,"slack_s":-40,"slack_m":-100,"slack_l":-20,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Cora spec sheet RESCOR-20032024"},{"brand":"Daikin","series":"Cora","indoor_model":"FTXM50UVMZ","outdoor_model":"RXM50UVMZ","kw":5.0,"unit_w":930,"unit_h":695,"unit_d":350,"req_w":990,"req_h":725,"req_d":370,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-170,"slack_s":-40,"slack_m":-100,"slack_l":-20,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Cora spec sheet RESCOR-20032024"},{"brand":"Daikin","series":"Cora","indoor_model":"FTXM60UVMZ","outdoor_model":"RXM60UVMZ","kw":6.0,"unit_w":930,"unit_h":695,"unit_d":350,"req_w":990,"req_h":725,"req_d":370,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-170,"slack_s":-40,"slack_m":-100,"slack_l":-20,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Cora spec sheet RESCOR-20032024"},{"brand":"Daikin","series":"Cora","indoor_model":"FTXM71UVMZ","outdoor_model":"RXM71UVMZ","kw":7.1,"unit_w":930,"unit_h":695,"unit_d":350,"req_w":990,"req_h":725,"req_d":370,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-170,"slack_s":-40,"slack_m":-100,"slack_l":-20,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Cora spec sheet RESCOR-20032024"},{"brand":"Daikin","series":"Zena Vogue","indoor_model":"FTXJ25TVMAW/K","outdoor_model":"RXJ25TVMA","kw":2.5,"unit_w":675,"unit_h":550,"unit_d":284,"req_w":735,"req_h":580,"req_d":304,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-9,"slack_s":76,"slack_m":66,"slack_l":66,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Zena Vogue spec sheet RESZEV-03032022"},{"brand":"Daikin","series":"Zena Vogue","indoor_model":"FTXJ35TVMAW/K","outdoor_model":"RXJ35TVMA","kw":3.5,"unit_w":675,"unit_h":550,"unit_d":284,"req_w":735,"req_h":580,"req_d":304,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-9,"slack_s":76,"slack_m":66,"slack_l":66,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Zena Vogue spec sheet RESZEV-03032022"},{"brand":"Daikin","series":"Zena Vogue","indoor_model":"FTXJ50TVMAW/K","outdoor_model":"RXJ50TVMA","kw":5.0,"unit_w":930,"unit_h":695,"unit_d":350,"req_w":990,"req_h":725,"req_d":370,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-170,"slack_s":-40,"slack_m":-100,"slack_l":-20,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Zena Vogue spec sheet RESZEV-03032022"},{"brand":"Daikin","series":"Zena Vogue","indoor_model":"FTXJ60TVMAW/K","outdoor_model":"RXJ60TVMA","kw":6.0,"unit_w":930,"unit_h":695,"unit_d":350,"req_w":990,"req_h":725,"req_d":370,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-170,"slack_s":-40,"slack_m":-100,"slack_l":-20,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"Zena Vogue spec sheet RESZEV-03032022"},{"brand":"Fujitsu","series":"Comfort","indoor_model":"ASTH07KNCA","outdoor_model":"AOTH07KNCA","kw":2.0,"unit_w":663,"unit_h":541,"unit_d":290,"req_w":723,"req_h":571,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-15,"slack_s":70,"slack_m":60,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Comfort","indoor_model":"ASTH09KNCA","outdoor_model":"AOTH09KNCA","kw":2.5,"unit_w":663,"unit_h":541,"unit_d":290,"req_w":723,"req_h":571,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-15,"slack_s":70,"slack_m":60,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Comfort","indoor_model":"ASTH12KNCA","outdoor_model":"AOTH12KNCA","kw":3.5,"unit_w":663,"unit_h":541,"unit_d":290,"req_w":723,"req_h":571,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-15,"slack_s":70,"slack_m":60,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Comfort","indoor_model":"ASTH14KNCA","outdoor_model":"AOTH14KNCA","kw":4.2,"unit_w":799,"unit_h":542,"unit_d":290,"req_w":859,"req_h":572,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-39,"slack_s":70,"slack_m":31,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Comfort","indoor_model":"ASTH18KNTA","outdoor_model":"AOTH18KNTA","kw":5.0,"unit_w":799,"unit_h":542,"unit_d":290,"req_w":859,"req_h":572,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-39,"slack_s":70,"slack_m":31,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Comfort","indoor_model":"ASTH22KNTA","outdoor_model":"AOTH22KNTA","kw":6.0,"unit_w":799,"unit_h":632,"unit_d":290,"req_w":859,"req_h":662,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-39,"slack_s":70,"slack_m":31,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Comfort","indoor_model":"ASTH24KNTA","outdoor_model":"AOTH24KNTA","kw":7.1,"unit_w":799,"unit_h":632,"unit_d":290,"req_w":859,"req_h":662,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-39,"slack_s":70,"slack_m":31,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Comfort","indoor_model":"ASTH30KNTA","outdoor_model":"AOTH30KNTA","kw":8.5,"unit_w":940,"unit_h":788,"unit_d":320,"req_w":1000,"req_h":818,"req_d":340,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-180,"slack_s":-50,"slack_m":-110,"slack_l":-30,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Comfort","indoor_model":"ASTH34KNTA","outdoor_model":"AOTH34KNTA","kw":9.4,"unit_w":940,"unit_h":998,"unit_d":320,"req_w":1000,"req_h":1028,"req_d":340,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-228,"slack_s":-228,"slack_m":-110,"slack_l":-30,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Floor Console","indoor_model":"AGTG09KVCA","outdoor_model":"AOTG09KVCA","kw":2.5,"unit_w":799,"unit_h":542,"unit_d":290,"req_w":859,"req_h":572,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-39,"slack_s":70,"slack_m":31,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Floor Console","indoor_model":"AGTG12KVCA","outdoor_model":"AOTG12KVCA","kw":3.5,"unit_w":799,"unit_h":632,"unit_d":290,"req_w":859,"req_h":662,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-39,"slack_s":70,"slack_m":31,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Floor Console","indoor_model":"AGTG14KVCA","outdoor_model":"AOTG14KVCA","kw":4.2,"unit_w":799,"unit_h":632,"unit_d":290,"req_w":859,"req_h":662,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-39,"slack_s":70,"slack_m":31,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Lifestyle","indoor_model":"ASTH07KMCD","outdoor_model":"AOTH07KMCD","kw":2.0,"unit_w":663,"unit_h":541,"unit_d":290,"req_w":723,"req_h":571,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-15,"slack_s":70,"slack_m":60,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Lifestyle","indoor_model":"ASTG09KMTC","outdoor_model":"AOTG09KMTC","kw":2.5,"unit_w":799,"unit_h":542,"unit_d":290,"req_w":859,"req_h":572,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-39,"slack_s":70,"slack_m":31,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Lifestyle","indoor_model":"ASTH09KMCD","outdoor_model":"AOTH09KMCD","kw":2.5,"unit_w":799,"unit_h":542,"unit_d":290,"req_w":859,"req_h":572,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-39,"slack_s":70,"slack_m":31,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Lifestyle","indoor_model":"ASTG12KMTC","outdoor_model":"AOTG12KMTC","kw":3.5,"unit_w":799,"unit_h":542,"unit_d":290,"req_w":859,"req_h":572,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-39,"slack_s":70,"slack_m":31,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Lifestyle","indoor_model":"ASTH12KMCD","outdoor_model":"AOTH12KMCD","kw":3.5,"unit_w":799,"unit_h":542,"unit_d":290,"req_w":859,"req_h":572,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-39,"slack_s":70,"slack_m":31,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Lifestyle","indoor_model":"ASTH14KMCD","outdoor_model":"AOTH14KMCD","kw":4.2,"unit_w":799,"unit_h":632,"unit_d":290,"req_w":859,"req_h":662,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-39,"slack_s":70,"slack_m":31,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Lifestyle","indoor_model":"ASTG18KMTC","outdoor_model":"AOTG18KMTC","kw":5.0,"unit_w":820,"unit_h":716,"unit_d":315,"req_w":880,"req_h":746,"req_d":335,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-60,"slack_s":45,"slack_m":10,"slack_l":35,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Lifestyle","indoor_model":"ASTH18KMTD","outdoor_model":"AOTH18KMTD","kw":5.0,"unit_w":820,"unit_h":716,"unit_d":315,"req_w":880,"req_h":746,"req_d":335,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-60,"slack_s":45,"slack_m":10,"slack_l":35,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Lifestyle","indoor_model":"ASTG22KMTC","outdoor_model":"AOTG22KMTC","kw":6.0,"unit_w":820,"unit_h":716,"unit_d":315,"req_w":880,"req_h":746,"req_d":335,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-60,"slack_s":45,"slack_m":10,"slack_l":35,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Lifestyle","indoor_model":"ASTH22KMTD","outdoor_model":"AOTH22KMTD","kw":6.0,"unit_w":820,"unit_h":716,"unit_d":315,"req_w":880,"req_h":746,"req_d":335,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-60,"slack_s":45,"slack_m":10,"slack_l":35,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Lifestyle","indoor_model":"ASTG24KMTC","outdoor_model":"AOTG24KMTC","kw":7.1,"unit_w":820,"unit_h":716,"unit_d":315,"req_w":880,"req_h":746,"req_d":335,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-60,"slack_s":45,"slack_m":10,"slack_l":35,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Lifestyle","indoor_model":"ASTH24KMTD","outdoor_model":"AOTH24KMTD","kw":7.1,"unit_w":820,"unit_h":716,"unit_d":315,"req_w":880,"req_h":746,"req_d":335,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-60,"slack_s":45,"slack_m":10,"slack_l":35,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Lifestyle","indoor_model":"ASTH24KMTE","outdoor_model":"AOTH24KMTE","kw":7.1,"unit_w":820,"unit_h":716,"unit_d":315,"req_w":880,"req_h":746,"req_d":335,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-60,"slack_s":45,"slack_m":10,"slack_l":35,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Lifestyle","indoor_model":"ASTG30KMTC","outdoor_model":"AOTG30KMTC","kw":8.5,"unit_w":900,"unit_h":830,"unit_d":330,"req_w":960,"req_h":860,"req_d":350,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":true,"slack_xs":-140,"slack_s":-60,"slack_m":-70,"slack_l":10,"minimum_cover":"Large","recommended_cover":"Large","fit_quality":"Tight fit - no larger standard cover fits","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Lifestyle","indoor_model":"ASTH30KMTD","outdoor_model":"AOTH30KMTD","kw":8.5,"unit_w":940,"unit_h":788,"unit_d":320,"req_w":1000,"req_h":818,"req_d":340,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-180,"slack_s":-50,"slack_m":-110,"slack_l":-30,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Lifestyle","indoor_model":"ASTG34KMTC","outdoor_model":"AOTG34KMTC","kw":9.4,"unit_w":970,"unit_h":914,"unit_d":370,"req_w":1030,"req_h":944,"req_d":390,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-210,"slack_s":-144,"slack_m":-140,"slack_l":-60,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Fujitsu","series":"Lifestyle","indoor_model":"ASTH34KMTD","outdoor_model":"AOTH34KMTD","kw":9.4,"unit_w":940,"unit_h":998,"unit_d":320,"req_w":1000,"req_h":1028,"req_d":340,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-228,"slack_s":-228,"slack_m":-110,"slack_l":-30,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"generalairstage.co.nz product spec table (Outdoor Unit Dimensions H x W x D)"},{"brand":"Gree","series":"Amber","indoor_model":"GWH09B","outdoor_model":"GWH09B","kw":2.6,"unit_w":780,"unit_h":540,"unit_d":300,"req_w":840,"req_h":570,"req_d":320,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-25,"slack_s":60,"slack_m":50,"slack_l":50,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Series family sizing - verify exact model before quoting"},{"brand":"Gree","series":"Amber","indoor_model":"GWH12B","outdoor_model":"GWH12B","kw":3.5,"unit_w":780,"unit_h":540,"unit_d":300,"req_w":840,"req_h":570,"req_d":320,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-25,"slack_s":60,"slack_m":50,"slack_l":50,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Series family sizing - verify exact model before quoting"},{"brand":"Gree","series":"Amber","indoor_model":"GWH18B","outdoor_model":"GWH18B","kw":5.2,"unit_w":848,"unit_h":596,"unit_d":320,"req_w":908,"req_h":626,"req_d":340,"fits_xs":false,"fits_s":true,"fits_m":false,"fits_l":true,"slack_xs":-88,"slack_s":40,"slack_m":-18,"slack_l":30,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Series family sizing - verify exact model before quoting"},{"brand":"Gree","series":"Lomo","indoor_model":"GWH09","outdoor_model":"GWH09","kw":2.6,"unit_w":782,"unit_h":540,"unit_d":320,"req_w":842,"req_h":570,"req_d":340,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-45,"slack_s":40,"slack_m":30,"slack_l":30,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Gree NZ Lomo Brochure 2020 (greeac.co.nz)"},{"brand":"Gree","series":"Lomo","indoor_model":"GWH12","outdoor_model":"GWH12","kw":3.5,"unit_w":848,"unit_h":596,"unit_d":320,"req_w":908,"req_h":626,"req_d":340,"fits_xs":false,"fits_s":true,"fits_m":false,"fits_l":true,"slack_xs":-88,"slack_s":40,"slack_m":-18,"slack_l":30,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Gree NZ Lomo Brochure 2020 (greeac.co.nz)"},{"brand":"Gree","series":"Lomo","indoor_model":"GWH18","outdoor_model":"GWH18","kw":5.2,"unit_w":965,"unit_h":700,"unit_d":396,"req_w":1025,"req_h":730,"req_d":416,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-205,"slack_s":-75,"slack_m":-135,"slack_l":-55,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Gree NZ Lomo Brochure 2020 (greeac.co.nz)"},{"brand":"Haier","series":"Flexis","indoor_model":"AS25F","outdoor_model":"1U25F","kw":2.5,"unit_w":800,"unit_h":553,"unit_d":280,"req_w":860,"req_h":583,"req_d":300,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":80,"slack_m":30,"slack_l":70,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Series family sizing - verify exact model before quoting"},{"brand":"Haier","series":"Flexis","indoor_model":"AS35F","outdoor_model":"1U35F","kw":3.5,"unit_w":800,"unit_h":553,"unit_d":280,"req_w":860,"req_h":583,"req_d":300,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":80,"slack_m":30,"slack_l":70,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Series family sizing - verify exact model before quoting"},{"brand":"Haier","series":"Flexis","indoor_model":"AS50F","outdoor_model":"1U50F","kw":5.0,"unit_w":890,"unit_h":700,"unit_d":340,"req_w":950,"req_h":730,"req_d":360,"fits_xs":false,"fits_s":true,"fits_m":false,"fits_l":true,"slack_xs":-130,"slack_s":0,"slack_m":-60,"slack_l":10,"minimum_cover":"Small","recommended_cover":"Large","fit_quality":"Tight fit - next size up recommended","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Haier","series":"Tundra","indoor_model":"AS26T","outdoor_model":"1U26T","kw":2.6,"unit_w":800,"unit_h":553,"unit_d":280,"req_w":860,"req_h":583,"req_d":300,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":80,"slack_m":30,"slack_l":70,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Series family sizing - verify exact model before quoting"},{"brand":"Haier","series":"Tundra","indoor_model":"AS35T","outdoor_model":"1U35T","kw":3.5,"unit_w":800,"unit_h":553,"unit_d":280,"req_w":860,"req_h":583,"req_d":300,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":80,"slack_m":30,"slack_l":70,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Series family sizing - verify exact model before quoting"},{"brand":"Haier","series":"Tundra","indoor_model":"AS50T","outdoor_model":"1U50T","kw":5.0,"unit_w":890,"unit_h":700,"unit_d":340,"req_w":950,"req_h":730,"req_d":360,"fits_xs":false,"fits_s":true,"fits_m":false,"fits_l":true,"slack_xs":-130,"slack_s":0,"slack_m":-60,"slack_l":10,"minimum_cover":"Small","recommended_cover":"Large","fit_quality":"Tight fit - next size up recommended","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Hitachi","series":"Takai","indoor_model":"RAS25","outdoor_model":"RAC25","kw":2.5,"unit_w":780,"unit_h":570,"unit_d":280,"req_w":840,"req_h":600,"req_d":300,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-20,"slack_s":80,"slack_m":50,"slack_l":70,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Common family sizing - verify exact model before quoting"},{"brand":"Hitachi","series":"Takai","indoor_model":"RAS35","outdoor_model":"RAC35","kw":3.5,"unit_w":780,"unit_h":570,"unit_d":280,"req_w":840,"req_h":600,"req_d":300,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-20,"slack_s":80,"slack_m":50,"slack_l":70,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Common family sizing - verify exact model before quoting"},{"brand":"Hitachi","series":"Takai","indoor_model":"RAS50","outdoor_model":"RAC50","kw":5.0,"unit_w":800,"unit_h":650,"unit_d":300,"req_w":860,"req_h":680,"req_d":320,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":60,"slack_m":30,"slack_l":50,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Common family sizing - verify exact model before quoting"},{"brand":"Midea","series":"Mission","indoor_model":"MSAG-09","outdoor_model":"MOX130-09","kw":2.6,"unit_w":805,"unit_h":554,"unit_d":330,"req_w":865,"req_h":584,"req_d":350,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-55,"slack_s":30,"slack_m":20,"slack_l":20,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Common family sizing - verify exact model before quoting"},{"brand":"Midea","series":"Mission","indoor_model":"MSAG-12","outdoor_model":"MOX230-12","kw":3.5,"unit_w":805,"unit_h":554,"unit_d":330,"req_w":865,"req_h":584,"req_d":350,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-55,"slack_s":30,"slack_m":20,"slack_l":20,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Common family sizing - verify exact model before quoting"},{"brand":"Midea","series":"Mission","indoor_model":"MSAG-18","outdoor_model":"MOX330-18","kw":5.2,"unit_w":805,"unit_h":554,"unit_d":330,"req_w":865,"req_h":584,"req_d":350,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-55,"slack_s":30,"slack_m":20,"slack_l":20,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Common family sizing - verify exact model before quoting"},{"brand":"Mitsubishi Electric","series":"AP Mini","indoor_model":"MSZ-AP20VGD","outdoor_model":"MUZ-AP20VGD","kw":2.0,"unit_w":800,"unit_h":550,"unit_d":285,"req_w":860,"req_h":580,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":75,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@HeatPumpRange.pdf"},{"brand":"Mitsubishi Electric","series":"AP Smart","indoor_model":"MSZ-AP25VGKD2","outdoor_model":"MUZ-AP25VG2","kw":2.5,"unit_w":800,"unit_h":550,"unit_d":285,"req_w":860,"req_h":580,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":75,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-ap.pdf spec table"},{"brand":"Mitsubishi Electric","series":"AP Smart","indoor_model":"MSZ-AP35VGKD2","outdoor_model":"MUZ-AP35VG2","kw":3.5,"unit_w":800,"unit_h":550,"unit_d":285,"req_w":860,"req_h":580,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":75,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-ap.pdf spec table"},{"brand":"Mitsubishi Electric","series":"AP Smart","indoor_model":"MSZ-AP42VGKD2","outdoor_model":"MUZ-AP42VG2","kw":4.2,"unit_w":800,"unit_h":550,"unit_d":285,"req_w":860,"req_h":580,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":75,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-ap.pdf spec table (verify)"},{"brand":"Mitsubishi Electric","series":"AP Smart","indoor_model":"MSZ-AP50VGKD2","outdoor_model":"MUZ-AP50VG2","kw":5.0,"unit_w":800,"unit_h":714,"unit_d":285,"req_w":860,"req_h":744,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":56,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-ap.pdf spec table"},{"brand":"Mitsubishi Electric","series":"AP Smart","indoor_model":"MSZ-AP60VGKD2","outdoor_model":"MUZ-AP60VG2","kw":6.0,"unit_w":800,"unit_h":714,"unit_d":285,"req_w":860,"req_h":744,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":56,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-ap.pdf spec table"},{"brand":"Mitsubishi Electric","series":"AP Smart","indoor_model":"MSZ-AP71VGKD2","outdoor_model":"MUZ-AP71VG2","kw":7.1,"unit_w":840,"unit_h":880,"unit_d":330,"req_w":900,"req_h":910,"req_d":350,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":true,"slack_xs":-110,"slack_s":-110,"slack_m":-10,"slack_l":20,"minimum_cover":"Large","recommended_cover":"Large","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-ap.pdf spec table"},{"brand":"Mitsubishi Electric","series":"AP Smart","indoor_model":"MSZ-AP80VGKD2","outdoor_model":"MUZ-AP80VG2","kw":7.8,"unit_w":840,"unit_h":880,"unit_d":330,"req_w":900,"req_h":910,"req_d":350,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":true,"slack_xs":-110,"slack_s":-110,"slack_m":-10,"slack_l":20,"minimum_cover":"Large","recommended_cover":"Large","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-ap.pdf spec table"},{"brand":"Mitsubishi Electric","series":"AS90","indoor_model":"MSZ-AS90VGD","outdoor_model":"MUZ-AS90VGD","kw":9.0,"unit_w":840,"unit_h":880,"unit_d":330,"req_w":900,"req_h":910,"req_d":350,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":true,"slack_xs":-110,"slack_s":-110,"slack_m":-10,"slack_l":20,"minimum_cover":"Large","recommended_cover":"Large","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@HeatPumpRange.pdf"},{"brand":"Mitsubishi Electric","series":"EF Designer Smart","indoor_model":"MSZ-EF25VGKD","outdoor_model":"MUZ-EF25VGD","kw":2.5,"unit_w":800,"unit_h":550,"unit_d":285,"req_w":860,"req_h":580,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":75,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@HeatPumpRange.pdf EF spec table"},{"brand":"Mitsubishi Electric","series":"EF Designer Smart","indoor_model":"MSZ-EF35VGKD","outdoor_model":"MUZ-EF35VGD","kw":3.5,"unit_w":800,"unit_h":550,"unit_d":285,"req_w":860,"req_h":580,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":75,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@HeatPumpRange.pdf EF spec table"},{"brand":"Mitsubishi Electric","series":"EF Designer Smart","indoor_model":"MSZ-EF42VGKD","outdoor_model":"MUZ-EF42VGD","kw":4.2,"unit_w":800,"unit_h":714,"unit_d":285,"req_w":860,"req_h":744,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":56,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@HeatPumpRange.pdf EF spec table"},{"brand":"Mitsubishi Electric","series":"EF Designer Smart","indoor_model":"MSZ-EF50VGKD","outdoor_model":"MUZ-EF50VGD","kw":5.0,"unit_w":800,"unit_h":714,"unit_d":285,"req_w":860,"req_h":744,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":56,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@HeatPumpRange.pdf EF spec table"},{"brand":"Mitsubishi Electric","series":"GS Standard","indoor_model":"MSZ-GS25VFD","outdoor_model":"MUZ-GS25VFD","kw":2.5,"unit_w":800,"unit_h":550,"unit_d":285,"req_w":860,"req_h":580,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":75,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-gs.pdf spec table"},{"brand":"Mitsubishi Electric","series":"GS Standard","indoor_model":"MSZ-GS35VFD","outdoor_model":"MUZ-GS35VFD","kw":3.5,"unit_w":800,"unit_h":550,"unit_d":285,"req_w":860,"req_h":580,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":75,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-gs.pdf spec table"},{"brand":"Mitsubishi Electric","series":"GS Standard","indoor_model":"MSZ-GS50VFD","outdoor_model":"MUZ-GS50VFD","kw":5.0,"unit_w":800,"unit_h":714,"unit_d":285,"req_w":860,"req_h":744,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":56,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-gs.pdf spec table"},{"brand":"Mitsubishi Electric","series":"GS Standard","indoor_model":"MSZ-GS60VFD","outdoor_model":"MUZ-GS60VFD","kw":6.0,"unit_w":800,"unit_h":714,"unit_d":285,"req_w":860,"req_h":744,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":56,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-gs.pdf spec table"},{"brand":"Mitsubishi Electric","series":"GS Standard","indoor_model":"MSZ-GS71VFD","outdoor_model":"MUZ-GS71VFD","kw":7.1,"unit_w":800,"unit_h":714,"unit_d":285,"req_w":860,"req_h":744,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":56,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-gs.pdf spec table"},{"brand":"Mitsubishi Electric","series":"GS Standard","indoor_model":"MSZ-GS80VFD","outdoor_model":"MUZ-GS80VFD","kw":7.8,"unit_w":840,"unit_h":880,"unit_d":330,"req_w":900,"req_h":910,"req_d":350,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":true,"slack_xs":-110,"slack_s":-110,"slack_m":-10,"slack_l":20,"minimum_cover":"Large","recommended_cover":"Large","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-gs.pdf spec table"},{"brand":"Mitsubishi Electric","series":"LN Black Diamond","indoor_model":"MSZ-LN25VGD","outdoor_model":"MUZ-LN25VGD","kw":2.5,"unit_w":800,"unit_h":550,"unit_d":285,"req_w":860,"req_h":580,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":75,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-ln.pdf spec table"},{"brand":"Mitsubishi Electric","series":"LN Black Diamond","indoor_model":"MSZ-LN35VGD","outdoor_model":"MUZ-LN35VGD","kw":3.5,"unit_w":800,"unit_h":550,"unit_d":285,"req_w":860,"req_h":580,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":75,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-ln.pdf spec table"},{"brand":"Mitsubishi Electric","series":"LN Black Diamond","indoor_model":"MSZ-LN50VGD","outdoor_model":"MUZ-LN50VGD","kw":5.0,"unit_w":800,"unit_h":714,"unit_d":285,"req_w":860,"req_h":744,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":56,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-ln.pdf spec table"},{"brand":"Mitsubishi Electric","series":"LN Black Diamond","indoor_model":"MSZ-LN60VGD","outdoor_model":"MUZ-LN60VGD","kw":6.1,"unit_w":840,"unit_h":880,"unit_d":330,"req_w":900,"req_h":910,"req_d":350,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":true,"slack_xs":-110,"slack_s":-110,"slack_m":-10,"slack_l":20,"minimum_cover":"Large","recommended_cover":"Large","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-ln.pdf spec table"},{"brand":"Mitsubishi Electric","series":"LN Black Diamond HyperCore","indoor_model":"MSZ-LN25VGD","outdoor_model":"MUZ-LN25VGHZ2","kw":2.5,"unit_w":800,"unit_h":550,"unit_d":285,"req_w":860,"req_h":580,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":75,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-ln.pdf spec table"},{"brand":"Mitsubishi Electric","series":"LN Black Diamond HyperCore","indoor_model":"MSZ-LN35VGD","outdoor_model":"MUZ-LN35VGHZ2","kw":3.5,"unit_w":800,"unit_h":550,"unit_d":285,"req_w":860,"req_h":580,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":75,"slack_m":30,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-ln.pdf spec table"},{"brand":"Mitsubishi Electric","series":"LN Black Diamond HyperCore","indoor_model":"MSZ-LN50VGD","outdoor_model":"MUZ-LN50VGHZ2","kw":5.0,"unit_w":840,"unit_h":880,"unit_d":330,"req_w":900,"req_h":910,"req_d":350,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":true,"slack_xs":-110,"slack_s":-110,"slack_m":-10,"slack_l":20,"minimum_cover":"Large","recommended_cover":"Large","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-ln.pdf spec table"},{"brand":"Mitsubishi Electric","series":"LN Black Diamond HyperCore","indoor_model":"MSZ-LN60VD","outdoor_model":"MUZ-LN60VGHZ","kw":6.1,"unit_w":840,"unit_h":880,"unit_d":330,"req_w":900,"req_h":910,"req_d":350,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":true,"slack_xs":-110,"slack_s":-110,"slack_m":-10,"slack_l":20,"minimum_cover":"Large","recommended_cover":"Large","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"@msz-ln.pdf spec table"},{"brand":"Mitsubishi Electric","series":"OmniCore Multi 5-port","indoor_model":"(multi)","outdoor_model":"MXZ-5F100VGD-A1","kw":10.0,"unit_w":950,"unit_h":796,"unit_d":330,"req_w":1010,"req_h":826,"req_d":350,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":false,"slack_xs":-190,"slack_s":-60,"slack_m":-120,"slack_l":-40,"minimum_cover":"","recommended_cover":"","fit_quality":"No standard cover fits - custom size required","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"mitsubishi-electric.co.nz product page spec table"},{"brand":"Mitsubishi Heavy Industries","series":"Avanti","indoor_model":"SRK25ZMA","outdoor_model":"SRC25ZMA-W","kw":2.5,"unit_w":780,"unit_h":540,"unit_d":290,"req_w":840,"req_h":570,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-20,"slack_s":70,"slack_m":50,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Avanti","indoor_model":"SRK35ZMA","outdoor_model":"SRC35ZMA-W","kw":3.5,"unit_w":780,"unit_h":540,"unit_d":290,"req_w":840,"req_h":570,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-20,"slack_s":70,"slack_m":50,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Avanti","indoor_model":"SRK50ZMA","outdoor_model":"SRC50ZMA-W","kw":5.0,"unit_w":780,"unit_h":540,"unit_d":290,"req_w":840,"req_h":570,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-20,"slack_s":70,"slack_m":50,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Avanti","indoor_model":"SRK60ZMA","outdoor_model":"SRC60ZMA-W","kw":6.0,"unit_w":780,"unit_h":540,"unit_d":290,"req_w":840,"req_h":570,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-20,"slack_s":70,"slack_m":50,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Avanti","indoor_model":"SRK71ZMA","outdoor_model":"SRC71ZMA-W","kw":7.1,"unit_w":780,"unit_h":540,"unit_d":290,"req_w":840,"req_h":570,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-20,"slack_s":70,"slack_m":50,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Avanti","indoor_model":"SRK80ZMA","outdoor_model":"SRC80ZMA-W","kw":8.0,"unit_w":780,"unit_h":540,"unit_d":290,"req_w":840,"req_h":570,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-20,"slack_s":70,"slack_m":50,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Avanti Plus","indoor_model":"SRK25ZRA","outdoor_model":"SRC25ZRA-W","kw":2.5,"unit_w":800,"unit_h":640,"unit_d":290,"req_w":860,"req_h":670,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":70,"slack_m":30,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Avanti Plus","indoor_model":"SRK35ZRA","outdoor_model":"SRC35ZRA-W","kw":3.5,"unit_w":800,"unit_h":640,"unit_d":290,"req_w":860,"req_h":670,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":70,"slack_m":30,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Avanti Plus","indoor_model":"SRK50ZRA","outdoor_model":"SRC50ZRA-W","kw":5.0,"unit_w":800,"unit_h":640,"unit_d":290,"req_w":860,"req_h":670,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":70,"slack_m":30,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Avanti Plus","indoor_model":"SRK60ZRA","outdoor_model":"SRC60ZRA-W","kw":6.0,"unit_w":800,"unit_h":640,"unit_d":290,"req_w":860,"req_h":670,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":70,"slack_m":30,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Avanti Plus","indoor_model":"SRK71ZRA","outdoor_model":"SRC71ZRA-W","kw":7.1,"unit_w":800,"unit_h":640,"unit_d":290,"req_w":860,"req_h":670,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":70,"slack_m":30,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Avanti Plus","indoor_model":"SRK80ZRA","outdoor_model":"SRC80ZRA-W","kw":8.0,"unit_w":800,"unit_h":640,"unit_d":290,"req_w":860,"req_h":670,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":70,"slack_m":30,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Bronte","indoor_model":"SRK90ZSA-B","outdoor_model":"SRC90ZSA-W","kw":9.0,"unit_w":800,"unit_h":640,"unit_d":290,"req_w":860,"req_h":670,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":70,"slack_m":30,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Bronte","indoor_model":"SRK125ZSA-B","outdoor_model":"SRC125ZSA-W","kw":12.5,"unit_w":800,"unit_h":640,"unit_d":290,"req_w":860,"req_h":670,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":70,"slack_m":30,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Ciara","indoor_model":"SRK20ZSA","outdoor_model":"SRC20ZSA-W","kw":2.0,"unit_w":645,"unit_h":540,"unit_d":275,"req_w":705,"req_h":570,"req_d":295,"fits_xs":true,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":0,"slack_s":85,"slack_m":75,"slack_l":75,"minimum_cover":"Extra Small","recommended_cover":"Small","fit_quality":"Tight fit - next size up recommended","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Ciara","indoor_model":"SRK25ZSA","outdoor_model":"SRC25ZSA-W","kw":2.5,"unit_w":645,"unit_h":540,"unit_d":275,"req_w":705,"req_h":570,"req_d":295,"fits_xs":true,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":0,"slack_s":85,"slack_m":75,"slack_l":75,"minimum_cover":"Extra Small","recommended_cover":"Small","fit_quality":"Tight fit - next size up recommended","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Ciara","indoor_model":"SRK35ZSA","outdoor_model":"SRC35ZSA-W","kw":3.5,"unit_w":645,"unit_h":540,"unit_d":275,"req_w":705,"req_h":570,"req_d":295,"fits_xs":true,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":0,"slack_s":85,"slack_m":75,"slack_l":75,"minimum_cover":"Extra Small","recommended_cover":"Small","fit_quality":"Tight fit - next size up recommended","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Ciara","indoor_model":"SRK50ZSA","outdoor_model":"SRC50ZSA-W","kw":5.0,"unit_w":780,"unit_h":595,"unit_d":290,"req_w":840,"req_h":625,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-20,"slack_s":70,"slack_m":50,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Ciara","indoor_model":"SRK60ZSA","outdoor_model":"SRC60ZSA-W","kw":6.0,"unit_w":800,"unit_h":640,"unit_d":290,"req_w":860,"req_h":670,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":70,"slack_m":30,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Mitsubishi Heavy Industries","series":"Ciara","indoor_model":"SRK71ZSA","outdoor_model":"SRC71ZSA-W","kw":7.1,"unit_w":800,"unit_h":640,"unit_d":290,"req_w":860,"req_h":670,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":70,"slack_m":30,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Claude AI research \u2013 NZ manufacturer websites, June 2026"},{"brand":"Panasonic","series":"AERO Series (VKR)","indoor_model":"CS-Z20VKR","outdoor_model":"CU-Z20VKR","kw":2.05,"unit_w":780,"unit_h":542,"unit_d":289,"req_w":840,"req_h":572,"req_d":309,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-20,"slack_s":71,"slack_m":50,"slack_l":61,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"panasonic.com/nz HVAC specs page (Dimensions - Outdoor h x w x d)"},{"brand":"Panasonic","series":"AERO Series (VKR)","indoor_model":"CS-Z25VKR","outdoor_model":"CU-Z25VKR","kw":2.5,"unit_w":780,"unit_h":542,"unit_d":289,"req_w":840,"req_h":572,"req_d":309,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-20,"slack_s":71,"slack_m":50,"slack_l":61,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"panasonic.com/nz HVAC specs page (Dimensions - Outdoor h x w x d)"},{"brand":"Panasonic","series":"AERO Series (VKR)","indoor_model":"CS-Z35VKR","outdoor_model":"CU-Z35VKR","kw":3.5,"unit_w":780,"unit_h":542,"unit_d":289,"req_w":840,"req_h":572,"req_d":309,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-20,"slack_s":71,"slack_m":50,"slack_l":61,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"panasonic.com/nz HVAC specs page (Dimensions - Outdoor h x w x d)"},{"brand":"Panasonic","series":"AERO Series (VKR)","indoor_model":"CS-Z42VKR","outdoor_model":"CU-Z42VKR","kw":4.2,"unit_w":875,"unit_h":695,"unit_d":320,"req_w":935,"req_h":725,"req_d":340,"fits_xs":false,"fits_s":true,"fits_m":false,"fits_l":true,"slack_xs":-115,"slack_s":15,"slack_m":-45,"slack_l":30,"minimum_cover":"Small","recommended_cover":"Large","fit_quality":"Tight fit - next size up recommended","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"panasonic.com/nz HVAC specs page (Dimensions - Outdoor h x w x d)"},{"brand":"Panasonic","series":"AERO Series (VKR)","indoor_model":"CS-Z50VKR","outdoor_model":"CU-Z50VKR","kw":5.0,"unit_w":875,"unit_h":695,"unit_d":320,"req_w":935,"req_h":725,"req_d":340,"fits_xs":false,"fits_s":true,"fits_m":false,"fits_l":true,"slack_xs":-115,"slack_s":15,"slack_m":-45,"slack_l":30,"minimum_cover":"Small","recommended_cover":"Large","fit_quality":"Tight fit - next size up recommended","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"panasonic.com/nz HVAC specs page (Dimensions - Outdoor h x w x d)"},{"brand":"Panasonic","series":"AERO Series (VKR)","indoor_model":"CS-Z60VKR","outdoor_model":"CU-Z60VKR","kw":6.0,"unit_w":875,"unit_h":695,"unit_d":320,"req_w":935,"req_h":725,"req_d":340,"fits_xs":false,"fits_s":true,"fits_m":false,"fits_l":true,"slack_xs":-115,"slack_s":15,"slack_m":-45,"slack_l":30,"minimum_cover":"Small","recommended_cover":"Large","fit_quality":"Tight fit - next size up recommended","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"panasonic.com/nz HVAC specs page (Dimensions - Outdoor h x w x d)"},{"brand":"Panasonic","series":"AERO Series (VKR)","indoor_model":"CS-Z71VKR","outdoor_model":"CU-Z71VKR","kw":7.1,"unit_w":875,"unit_h":695,"unit_d":320,"req_w":935,"req_h":725,"req_d":340,"fits_xs":false,"fits_s":true,"fits_m":false,"fits_l":true,"slack_xs":-115,"slack_s":15,"slack_m":-45,"slack_l":30,"minimum_cover":"Small","recommended_cover":"Large","fit_quality":"Tight fit - next size up recommended","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"panasonic.com/nz HVAC specs page (Dimensions - Outdoor h x w x d)"},{"brand":"Panasonic","series":"AERO Series (VKR)","indoor_model":"CS-Z80VKR","outdoor_model":"CU-Z80VKR","kw":8.0,"unit_w":875,"unit_h":795,"unit_d":320,"req_w":935,"req_h":825,"req_d":340,"fits_xs":false,"fits_s":false,"fits_m":false,"fits_l":true,"slack_xs":-115,"slack_s":-25,"slack_m":-45,"slack_l":30,"minimum_cover":"Large","recommended_cover":"Large","fit_quality":"Comfortable fit","verified":true,"data_status":"Verified - manufacturer spec sheet","source":"panasonic.com/nz HVAC specs page (Dimensions - Outdoor h x w x d)"},{"brand":"Samsung","series":"AR Series","indoor_model":"AR09","outdoor_model":"AR09","kw":2.5,"unit_w":790,"unit_h":548,"unit_d":285,"req_w":850,"req_h":578,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-30,"slack_s":75,"slack_m":40,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Common family sizing - verify exact model before quoting"},{"brand":"Samsung","series":"AR Series","indoor_model":"AR12","outdoor_model":"AR12","kw":3.5,"unit_w":790,"unit_h":548,"unit_d":285,"req_w":850,"req_h":578,"req_d":305,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-30,"slack_s":75,"slack_m":40,"slack_l":65,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Common family sizing - verify exact model before quoting"},{"brand":"Samsung","series":"AR Series","indoor_model":"AR18","outdoor_model":"AR18","kw":5.0,"unit_w":880,"unit_h":638,"unit_d":310,"req_w":940,"req_h":668,"req_d":330,"fits_xs":false,"fits_s":true,"fits_m":false,"fits_l":true,"slack_xs":-120,"slack_s":10,"slack_m":-50,"slack_l":30,"minimum_cover":"Small","recommended_cover":"Large","fit_quality":"Tight fit - next size up recommended","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): https://www.samsung.com/nz/consumer/home-appliances/air-cond"},{"brand":"Toshiba","series":"Hi-Wall","indoor_model":"RAS-10","outdoor_model":"RAS-10","kw":2.5,"unit_w":780,"unit_h":550,"unit_d":290,"req_w":840,"req_h":580,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-20,"slack_s":70,"slack_m":50,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Common family sizing - verify exact model before quoting"},{"brand":"Toshiba","series":"Hi-Wall","indoor_model":"RAS-13","outdoor_model":"RAS-13","kw":3.5,"unit_w":780,"unit_h":550,"unit_d":290,"req_w":840,"req_h":580,"req_d":310,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-20,"slack_s":70,"slack_m":50,"slack_l":60,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Common family sizing - verify exact model before quoting"},{"brand":"Toshiba","series":"Hi-Wall","indoor_model":"RAS-18","outdoor_model":"RAS-18","kw":5.0,"unit_w":800,"unit_h":630,"unit_d":300,"req_w":860,"req_h":660,"req_d":320,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":60,"slack_m":30,"slack_l":50,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Common family sizing - verify exact model before quoting"},{"brand":"Toshiba","series":"Hi-Wall","indoor_model":"RAS-22","outdoor_model":"RAS-22","kw":6.0,"unit_w":800,"unit_h":630,"unit_d":300,"req_w":860,"req_h":660,"req_d":320,"fits_xs":false,"fits_s":true,"fits_m":true,"fits_l":true,"slack_xs":-40,"slack_s":60,"slack_m":30,"slack_l":50,"minimum_cover":"Small","recommended_cover":"Small","fit_quality":"Comfortable fit","verified":false,"data_status":"UNCONFIRMED - carried over, not re-checked","source":"UNCONFIRMED - carried over from earlier sheet v3 (17/06/26): Common family sizing - verify exact model before quoting"}]};
+const C = DATA.covers, CL = DATA.clearance, M = DATA.models;
+const LADDER = ["Extra Small","Small","Medium","Large"];
+let MODE = "pick";
 
-const brandSel = document.getElementById('hpc-brand');
-const modelSel = document.getElementById('hpc-model');
-const findBtn = document.getElementById('hpc-find');
-const resetBtn = document.getElementById('hpc-reset');
-const resultEl = document.getElementById('hpc-result');
-
-const brands = [...new Set(HPC_DATA.map(r => r.brand))].sort();
-brands.forEach(b => {
-  const opt = document.createElement('option');
-  opt.value = b;
-  opt.textContent = b;
-  brandSel.appendChild(opt);
-});
-
-function populateModels(brand){
-  modelSel.innerHTML = '';
-  if(!brand){
-    modelSel.disabled = true;
-    const opt = document.createElement('option');
-    opt.value = '';
-    opt.textContent = 'Choose a brand first';
-    modelSel.appendChild(opt);
-    return;
-  }
-  modelSel.disabled = false;
-  const placeholder = document.createElement('option');
-  placeholder.value = '';
-  placeholder.textContent = 'Choose a model';
-  modelSel.appendChild(placeholder);
-
-  const models = HPC_DATA
-    .filter(r => r.brand === brand)
-    .sort((a,b) => a.kw - b.kw || a.model.localeCompare(b.model));
-
-  models.forEach((r, idx) => {
-    const opt = document.createElement('option');
-    opt.value = idx;
-    opt.textContent = `${r.model} (${r.kw}kW${r.series ? ' — ' + r.series : ''})`;
-    opt.dataset.brand = r.brand;
-    modelSel.appendChild(opt);
+function calc(w,h,d){
+  const rw = w + 2*CL.side_mm, rh = h + CL.top_mm, rd = d + CL.front_mm;
+  const rows = C.map(c=>{
+    const sw=c.w-rw, sh=c.h-rh, sd=c.d-rd;
+    return {size:c.size,price:c.price,w:c.w,h:c.h,d:c.d,
+            fits:(sw>=0&&sh>=0&&sd>=0), slack:Math.min(sw,sh,sd), sw:sw,sh:sh,sd:sd};
   });
-  modelSel._rows = models;
+  const fitting = LADDER.filter(s=>rows.find(r=>r.size===s).fits);
+  let rec=null, min=null, state="no";
+  if(fitting.length){
+    min = fitting[0];
+    const ms = rows.find(r=>r.size===min).slack;
+    if(ms < CL.tight_threshold_mm){
+      const later = fitting.filter(s=>LADDER.indexOf(s)>LADDER.indexOf(min));
+      rec = later.length? later[0] : min;
+      state = later.length? "tight-up" : "tight";
+    } else { rec = min; state="ok"; }
+  }
+  return {rw,rh,rd,rows,min,rec,state};
 }
 
-brandSel.addEventListener('change', () => {
-  populateModels(brandSel.value);
-  findBtn.disabled = true;
-  resultEl.classList.remove('show');
-});
-
-modelSel.addEventListener('change', () => {
-  findBtn.disabled = (modelSel.value === '');
-});
-
-function showResult(row){
-  const badge = document.getElementById('hpc-badge');
-  const pill = document.getElementById('hpc-fit-pill');
-  const note = document.getElementById('hpc-note');
-  const ctaHint = document.getElementById('hpc-cta-hint');
-  const ctaSize = document.getElementById('hpc-cta-size');
-const orderLink = document.getElementById('hpc-order-link');
-
-  document.getElementById('hpc-d-brand').textContent = row.series ? `${row.brand} — ${row.series}` : row.brand;
-  document.getElementById('hpc-d-model').textContent = `${row.model} / ${row.outdoor}`;
-  document.getElementById('hpc-d-kw').textContent = `${row.kw} kW`;
-  document.getElementById('hpc-d-dims').textContent = `${row.w}mm x ${row.h}mm x ${row.d}mm`;
-
-  if(row.recommended === 'Too Large'){
-    badge.textContent = 'Custom';
-    badge.classList.add('custom');
-    pill.className = 'hpc-fit-pill custom';
-    pill.textContent = 'Custom size required';
-    note.className = 'hpc-note custom-note';
-    note.textContent = "This outdoor unit is larger than our biggest standard Classic cover (Large). No problem — we build custom-sized covers all the time. Get in touch with your unit's dimensions and we'll quote a custom fit.";
-    badge.removeAttribute('href');
-ctaHint.style.display = 'none';
-  } else {
-    badge.textContent = row.recommended;
-    badge.classList.remove('custom');
-    ctaHint.style.display = '';
-    ctaSize.textContent = row.recommended;
-const sizeUrl = SIZE_URLS[row.recommended];
-if(sizeUrl){ badge.href = sizeUrl; orderLink.href = sizeUrl; }
-    if(row.fit === 'Tight Fit'){
-      pill.className = 'hpc-fit-pill tight';
-      pill.textContent = 'Tight Fit';
-      note.className = 'hpc-note';
-      note.textContent = "This cover fits, but clearance is tighter than usual. We recommend double-checking your exact unit dimensions before ordering, or get in touch if you'd like us to confirm the fit.";
-    } else {
-      pill.className = 'hpc-fit-pill good';
-      pill.textContent = 'Good Fit';
-      note.className = 'hpc-note';
-      note.textContent = "This size gives your unit comfortable clearance on all sides based on our standard clearance rules (50mm each side, 20mm above, 50mm behind).";
-    }
+function render(w,h,d,label,src,unver){
+  const r = calc(w,h,d), el=document.getElementById("res");
+  let vc,vt,vn,cta;
+  if(r.state==="no"){
+    vc="v-no"; vt="Custom Cover required";
+    vn="This unit needs at least <b>"+r.rw+" &times; "+r.rh+" &times; "+r.rd+
+       "&nbsp;mm</b> internally, which is larger than our Large cover. We build custom sizes to suit &mdash; "+
+       "tell us your measurements and we&rsquo;ll quote it.";
+    cta='<a class="btn btn-quote" href="'+SITE.quote+'" target="_top" rel="noopener">Get a Quote for a Custom Cover</a>';
+  }
+  else if(r.state==="ok"){
+    vc="v-ok"; vt=r.rec+" Classic Cover";
+    vn="Comfortable fit, with clearance to spare on every side.";
+    cta='<a class="btn btn-buy" href="'+(SITE.product[r.rec]||"#")+'" target="_top" rel="noopener">Order My '+r.rec+' Cover</a>';
+  }
+  else if(r.state==="tight-up"){
+    vc="v-tight"; vt=r.rec+" Classic Cover";
+    vn="<b>Tight fit warning:</b> the "+r.min+" does technically fit, but with only "+
+       r.rows.find(x=>x.size===r.min).slack+"&nbsp;mm to spare it is a tight fit. "+
+       "We recommend going up to the <b>"+r.rec+"</b> for easier installation and better airflow.";
+    cta='<a class="btn btn-buy" href="'+(SITE.product[r.rec]||"#")+'" target="_top" rel="noopener">Order My '+r.rec+' Cover</a>'+
+        '<a class="btn btn-alt" href="'+(SITE.product[r.min]||"#")+'" target="_top" rel="noopener">Order the '+r.min+' anyway</a>';
+  }
+  else {
+    vc="v-tight"; vt=r.rec+" Classic Cover &mdash; tight fit";
+    vn="<b>Tight fit warning:</b> the "+r.rec+" fits with only "+
+       r.rows.find(x=>x.size===r.rec).slack+"&nbsp;mm to spare, and there is no larger standard size. "+
+       "A custom cover will give you a better result.";
+    cta='<a class="btn btn-quote" href="'+SITE.quote+'" target="_top" rel="noopener">Get a Quote for a Custom Cover</a>'+
+        '<a class="btn btn-alt" href="'+(SITE.product[r.rec]||"#")+'" target="_top" rel="noopener">Order the '+r.rec+' anyway</a>';
   }
 
-  resultEl.classList.add('show');
-  resultEl.scrollIntoView({behavior:'smooth', block:'nearest'});
+  let price="";
+  if(r.rec){ const c=C.find(x=>x.size===r.rec); price=' <span class="v-label">from $'+c.price+' incl GST</span>'; }
+
+  let t='<table><tr><th>Cover</th><th>Internal W &times; H &times; D</th><th>Fits?</th>'+
+        '<th class="num">Spare room</th></tr>';
+  r.rows.forEach(x=>{
+    const isRec = x.size===r.rec;
+    const pill = x.fits ? (x.slack<CL.tight_threshold_mm?'<span class="pill p-t">Tight</span>'
+                                                        :'<span class="pill p-y">Yes</span>')
+                        : '<span class="pill p-n">No</span>';
+    t += '<tr'+(isRec?' style="background:#f2f8fa"':'')+'><td><b>'+x.size+'</b>'+
+         (isRec?' &larr;':'')+'</td><td>'+x.w+' &times; '+x.h+' &times; '+x.d+' mm</td><td>'+pill+
+         '</td><td class="num">'+(x.fits? x.slack+' mm':'&mdash;')+'</td></tr>';
+  });
+  t+='</table>';
+
+  el.innerHTML =
+    '<div class="verdict '+vc+'"><div class="v-label">Recommended</div>'+
+    '<div class="v-size">'+vt+'</div><div class="v-note">'+vn+'</div>'+price+'<div class="ctas">'+cta+'</div></div>'+
+    '<div class="card"><div class="meta"><b>'+label+'</b><br>'+
+    'Unit: '+w+' &times; '+h+' &times; '+d+' mm (W &times; H &times; D)<br>'+
+    'Needs internally: '+r.rw+' &times; '+r.rh+' &times; '+r.rd+' mm '+
+    '<span style="color:#8ba0a9">(+60 wide, +30 tall, +20 deep)</span>'+
+    (src?'<br><span style="color:#8ba0a9">Source: '+src+'</span>':'')+(unver?'<div class="warn">Dimensions for this brand are indicative and have not been re-verified against the manufacturer. Please measure your unit to be sure before ordering.</div>':'')+'</div>'+
+    '<h3>All four covers</h3>'+t+'</div>';
+  el.classList.add("on");
 }
 
-findBtn.addEventListener('click', () => {
-  if(modelSel.value === '') return;
-  const row = modelSel._rows[Number(modelSel.value)];
-  showResult(row);
-});
+function mode(m){
+  MODE=m;
+  document.getElementById("tabA").classList.toggle("on",m==="pick");
+  document.getElementById("tabB").classList.toggle("on",m==="dims");
+  document.getElementById("pickCard").style.display = m==="pick"?"block":"none";
+  document.getElementById("dimsCard").style.display = m==="dims"?"block":"none";
+  document.getElementById("res").classList.remove("on");
+  if(m==="pick") onModel(); else onDims();
+}
 
-resetBtn.addEventListener('click', () => {
-  brandSel.value = '';
-  populateModels('');
-  findBtn.disabled = true;
-  resultEl.classList.remove('show');
-});
-</script>
+const bSel=document.getElementById("brand"), mSel=document.getElementById("model");
+const brands=[...new Set(M.map(x=>x.brand))].sort();
+bSel.innerHTML='<option value="">Select a brand&hellip;</option>'+
+  brands.map(b=>'<option>'+b+'</option>').join("");
 
-</body>
-</html>
+bSel.onchange=function(){
+  const b=bSel.value;
+  if(!b){ mSel.innerHTML=""; mSel.disabled=true; document.getElementById("res").classList.remove("on"); return; }
+  const list=M.filter(x=>x.brand===b);
+  mSel.disabled=false;
+  mSel.innerHTML='<option value="">Select a model&hellip;</option>'+list.map((x,i)=>
+    '<option value="'+M.indexOf(x)+'">'+x.series+' &mdash; '+x.indoor_model+
+    ' ('+x.kw+' kW)</option>').join("");
+  document.getElementById("res").classList.remove("on");
+};
+function onModel(){
+  const v=mSel.value;
+  if(v===""||v===null){ document.getElementById("res").classList.remove("on"); return; }
+  const x=M[+v];
+  render(x.unit_w,x.unit_h,x.unit_d,
+    x.brand+' '+x.series+' &mdash; '+x.indoor_model+' / outdoor '+x.outdoor_model, x.source, !x.verified);
+}
+mSel.onchange=onModel;
+
+function onDims(){
+  const w=+document.getElementById("iw").value, h=+document.getElementById("ih").value,
+        d=+document.getElementById("idp").value;
+  if(w>0&&h>0&&d>0) render(w,h,d,"Measured unit","entered manually",false);
+  else document.getElementById("res").classList.remove("on");
+}
+["iw","ih","idp"].forEach(id=>document.getElementById(id).addEventListener("input",onDims));
+</script></body></html>
